@@ -3,9 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{D10472B7-5310-4095-B355-5C3ABD0EE9D9}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{993439CA-6888-429A-991E-9C08DD069F2A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lisp_interpreter", "src\lisp_interpreter\lisp_interpreter.vcxproj", "{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Debug|x64.ActiveCfg = Debug|x64
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Debug|x64.Build.0 = Debug|x64
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Debug|x86.ActiveCfg = Debug|Win32
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Debug|x86.Build.0 = Debug|Win32
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Release|x64.ActiveCfg = Release|x64
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Release|x64.Build.0 = Release|x64
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Release|x86.ActiveCfg = Release|Win32
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D0D4814-9539-4C88-9CED-C207A7A1D7F5} = {993439CA-6888-429A-991E-9C08DD069F2A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2B2CE55-8EF9-4BF3-9289-D3646E26C19E}
