@@ -66,8 +66,8 @@ class tokenizer {
 public:
     tokenizer(tlist& tokens) : tokens_(tokens) {}
     void tokenize(istream& input) {
-        while (input.good() && !input.eof()) {
-            char c = input.get();
+        char c;
+        while (input.good() && (c = input.get()) >= 0) {
             switch (c) {
             case '(':
                 flush();
@@ -91,6 +91,7 @@ public:
                 break;
             }
         }
+        flush();
     }
 private:
     void flush() {
@@ -117,14 +118,21 @@ private:
     tlist& tokens_;
 };
 
+// === PARSER ===
+
+class parser {
+
+};
+
+// === MAIN ===
+
 int main()
 {
     tlist tokens;
-    tokenizer tokenizer(tokens);
     for (string line; getline(cin, line);)
     {
         stringstream ss(line);
-        tokenizer.tokenize(ss);
+        tokenizer(tokens).tokenize(ss);
         // TODO: do something with tokens
         tokens.clear();
     }
