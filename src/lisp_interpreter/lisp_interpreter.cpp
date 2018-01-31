@@ -9,12 +9,12 @@
 using namespace std;
 
 // === TOKENS ===
-// TODO: add quote token (')
 
 class token {
 public:
     virtual bool is_left_paren() { return false; }
     virtual bool is_right_paren() { return false; }
+    virtual bool is_quote() { return false; }
     virtual bool is_int() { return false; }
     virtual bool is_double() { return false; }
     virtual uint32_t get_int() { throw runtime_error("not int token"); }
@@ -29,6 +29,10 @@ public:
 class t_right_paren : public token {
 public:
     bool is_right_paren() override { return true; }
+};
+class t_quote : public token {
+public:
+    bool is_quote() override { return true; }
 };
 class t_int : public token {
 public:
@@ -72,6 +76,10 @@ public:
             case ')':
                 flush();
                 tokens_.push_back(make_unique<t_right_paren>());
+                break;
+            case '\'':
+                flush();
+                tokens_.push_back(make_unique<t_quote>());
                 break;
             default:
                 if (isspace(c)) {
