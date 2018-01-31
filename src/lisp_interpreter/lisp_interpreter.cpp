@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <sstream>
+#include <exception>
 
 using namespace std;
 
@@ -116,6 +117,40 @@ private:
 
     string s_;
     tlist& tokens_;
+};
+
+// === AST ===
+
+class expression;
+using ep = shared_ptr<expression>;
+using cep = const ep;
+using tp = unique_ptr<token>;
+using ctp = const tp;
+
+class expression {
+public:
+    virtual bool is_pair() { return false; }
+    virtual cep& get_car() { throw runtime_error("not a pair"); }
+    virtual cep& get_cdr() { throw runtime_error("not a pair"); }
+    virtual ctp& get_token() { throw runtime_error("not a token"); }
+};
+
+class e_pair : public expression {
+public:
+    e_pair(ep car, ep cdr) : car_(move(car)), cdr_(move(cdr)) {}
+    bool is_pair() override { return true; }
+    cep& get_car() override { return car_; }
+    cep& get_cdr() override { return cdr_; }
+private:
+    cep car_, cdr_;
+};
+
+class e_token : public expression {
+public:
+    e_token(tp val) : val_(move(val)) {}
+    ctp& get_token() override { return val_; }
+private:
+    ctp val_;
 };
 
 // === PARSER ===
