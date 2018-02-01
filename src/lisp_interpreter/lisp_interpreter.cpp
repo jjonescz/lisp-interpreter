@@ -34,7 +34,7 @@ int main()
 
             // evaluate
             // TODO.
-            printer(cout).visit(*expr);
+            printer(cout).visit(expr);
             cout << endl;
         } while (!tokens.empty());
 

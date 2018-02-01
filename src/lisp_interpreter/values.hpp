@@ -10,7 +10,7 @@
 class value {
 public:
     virtual ~value() = default;
-    virtual void accept(visitor& v) const = 0;
+    virtual void accept(visitor& v, cvp& p) const = 0;
 };
 
 class internal_value : public value {
