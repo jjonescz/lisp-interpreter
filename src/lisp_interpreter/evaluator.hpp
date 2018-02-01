@@ -10,7 +10,7 @@
 
 class eval_error : public std::runtime_error {
 public:
-	eval_error(const char *msg) : std::runtime_error(msg) {}
+	eval_error(const std::string& msg) : std::runtime_error(msg) {}
 };
 
 class evaluator : public visitor {

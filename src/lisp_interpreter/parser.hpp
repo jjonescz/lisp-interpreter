@@ -9,7 +9,7 @@
 
 class parser_error : public std::runtime_error {
 public:
-    parser_error(const char *msg) : std::runtime_error(msg) {}
+    parser_error(const std::string& msg) : std::runtime_error(msg) {}
 };
 
 class parser {

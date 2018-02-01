@@ -25,18 +25,19 @@ using cep = const ep;
 using tp = std::unique_ptr<token>;
 using ctp = const tp;
 
+class visitor;
+class evaluator;
+
+class environment;
+
 class value;
 class internal_value;
 class v_primitive;
 class v_lambda;
 using vp = std::shared_ptr<value>;
 using cvp = const vp;
-using prim_func = cvp(*)(const std::shared_ptr<e_pair>);
+using prim_func = cvp(*)(evaluator&, const std::shared_ptr<e_pair>);
 
 // TODO: are const ptrs a good idea?
-
-class visitor;
-
-class environment;
 
 #endif

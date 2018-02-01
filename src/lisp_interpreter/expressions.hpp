@@ -15,7 +15,7 @@ class e_pair : public expression {
 public:
     e_pair(ep car, ep cdr);
     bool is_pair() override { return true; }
-    cep& get_car() const override { return car_; }
+    cep& get_car() const override { return car_; } // TODO: this allows outer code to move the pointer, doesn't it?
     cep& get_cdr() const override { return cdr_; }
     bool is_list() const override { return list_; }
     cvp accept(visitor& v, cvp& p) const override;

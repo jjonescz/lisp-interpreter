@@ -18,7 +18,7 @@ public:
     virtual bool is_list() const { throw std::runtime_error("not a pair"); }
     virtual bool is_primitive() { return false; }
     virtual bool is_lambda() { return false; }
-    virtual cvp eval(const std::shared_ptr<e_pair> args) { throw std::runtime_error("not a function"); }
+    virtual cvp eval(evaluator& eval, const std::shared_ptr<e_pair> args) { throw std::runtime_error("not a function"); }
     virtual cvp accept(visitor& v, cvp& p) const = 0;
 };
 
@@ -28,7 +28,7 @@ class v_primitive : public internal_value {
 public:
     v_primitive(prim_func func) : func_(func) {}
     bool is_primitive() override { return true; }
-    cvp eval(const std::shared_ptr<e_pair> args) override { return func_(args); }
+    cvp eval(evaluator& eval, const std::shared_ptr<e_pair> args) override { return func_(eval, args); }
     cvp accept(visitor& v, cvp& p) const override;
 private:
     prim_func func_;
