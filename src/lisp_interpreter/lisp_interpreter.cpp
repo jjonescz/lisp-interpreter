@@ -2,7 +2,7 @@
 //
 
 #include <iostream>
-#include <vector>
+#include <list>
 #include <memory>
 #include <sstream>
 #include <exception>
@@ -60,8 +60,9 @@ private:
 };
 
 // === TOKENIZER ===
+// TODO: ignore comments
 
-using tlist = vector<unique_ptr<token>>;
+using tlist = list<unique_ptr<token>>;
 
 class tokenizer {
 public:
@@ -105,7 +106,7 @@ private:
                 return;
             }
             double d;
-            if (ss >> d) {
+            if (ss >> d) { // TODO: this will never be true...
                 tokens_.push_back(make_unique<t_double>(d));
                 s_.clear();
                 return;
@@ -130,6 +131,7 @@ using ctp = const tp;
 class expression {
 public:
     virtual bool is_pair() { return false; }
+    // TODO: maybe use const expression* and const token*
     virtual cep& get_car() { throw runtime_error("not a pair"); }
     virtual cep& get_cdr() { throw runtime_error("not a pair"); }
     virtual ctp& get_token() { throw runtime_error("not a token"); }
@@ -155,8 +157,46 @@ private:
 
 // === PARSER ===
 
-class parser {
+class parser_error : public runtime_error {
+public:
+    parser_error(const char *msg) : runtime_error(msg) {}
+};
 
+class parser {
+public:
+    parser(tlist& toks) : toks_(toks),
+        empty_list_(make_shared<e_token>(make_unique<t_string>("()"))),
+        quote_(make_shared<e_token>(make_unique<t_string>("quote"))) {}
+    ep parse() {
+        if (!toks_.empty()) {
+            if (toks_.front()->is_left_paren()) {
+                toks_.pop_front();
+                return parse_list();
+            }
+            if (toks_.front()->is_quote()) {
+                toks_.pop_front();
+                return make_shared<e_pair>(quote_, make_shared<e_pair>(parse(), empty_list_));
+            }
+            if (toks_.front()->is_right_paren()) { throw parser_error("unexpected closing bracket"); }
+            tp tok(move(toks_.front()));
+            toks_.pop_front();
+            return make_shared<e_token>(move(tok));
+        }
+        throw parser_error("syntax error");
+    }
+private:
+    ep parse_list() {
+        if (toks_.empty()) { throw parser_error("missing closing bracket"); }
+        if (toks_.front()->is_right_paren()) {
+            toks_.pop_front();
+            return empty_list_;
+        }
+        ep car(parse());
+        ep cdr(parse_list());
+        return make_shared<e_pair>(move(car), move(cdr));
+    }
+    tlist& toks_;
+    ep empty_list_, quote_;
 };
 
 // === MAIN ===
@@ -166,9 +206,27 @@ int main()
     tlist tokens;
     for (string line; getline(cin, line);)
     {
+        // tokenize
         stringstream ss(line);
         tokenizer(tokens).tokenize(ss);
-        // TODO: do something with tokens
+
+        parser p(tokens);
+        do {
+            // parse
+            ep expr;
+            try {
+                expr = p.parse();
+            }
+            catch (const parser_error& e) {
+                cerr << "Parsing error: " << e.what() << endl;
+                break;
+            }
+
+            // evaluate
+            // TODO.
+            cout << expr << endl;
+        } while (!tokens.empty());
+
         tokens.clear();
     }
     return 0;
