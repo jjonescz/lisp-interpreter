@@ -5,6 +5,7 @@
 #include <sstream>
 #include "tokenizer.hpp"
 #include "parser.hpp"
+#include "visitors.hpp"
 
 using namespace std;
 
@@ -31,7 +32,8 @@ int main()
 
             // evaluate
             // TODO.
-            cout << expr << endl;
+            printer(cout).visit(*expr);
+            cout << endl;
         } while (!tokens.empty());
 
         tokens.clear();

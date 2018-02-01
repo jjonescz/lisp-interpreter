@@ -14,9 +14,12 @@ public:
     virtual bool is_quote() { return false; }
     virtual bool is_int() { return false; }
     virtual bool is_double() { return false; }
+    virtual bool is_string() { return false; }
     virtual uint32_t get_int() { throw std::runtime_error("not int token"); }
     virtual double get_double() { throw std::runtime_error("not double token"); }
+    // TODO: return some reference to string instead?
     virtual std::string get_string() { throw std::runtime_error("not string token"); }
+    virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
 };
 
 class t_left_paren : public token {
@@ -36,6 +39,7 @@ public:
     t_int(uint32_t val) : val_(val) {}
     bool is_int() override { return true; }
     uint32_t get_int() override { return val_; }
+    std::string to_string() override { return std::to_string(val_); }
 private:
     uint32_t val_;
 };
@@ -44,13 +48,16 @@ public:
     t_double(double val) : val_(val) {}
     bool is_double() override { return true; }
     double get_double() override { return val_; }
+    std::string to_string() override { return std::to_string(val_); }
 private:
     double val_;
 };
 class t_string : public token {
 public:
     t_string(const std::string& val) : val_(val) {}
+    bool is_string() override { return true; }
     std::string get_string() override { return val_; }
+    std::string to_string() override { return val_; }
 private:
     std::string val_;
 };
