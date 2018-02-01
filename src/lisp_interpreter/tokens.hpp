@@ -10,6 +10,7 @@
 
 class token {
 public:
+    virtual ~token() = default;
     virtual bool is_left_paren() { return false; }
     virtual bool is_right_paren() { return false; }
     virtual bool is_quote() { return false; }

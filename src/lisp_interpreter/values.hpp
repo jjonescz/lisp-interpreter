@@ -8,6 +8,7 @@ class visitor;
 
 class value {
 public:
+    virtual ~value() = default;
     virtual void accept(visitor& v) const = 0;
 };
 
