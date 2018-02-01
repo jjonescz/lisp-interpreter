@@ -17,10 +17,9 @@ public:
     virtual bool is_int() { return false; }
     virtual bool is_double() { return false; }
     virtual bool is_string() { return false; }
-    virtual uint32_t get_int() { throw std::runtime_error("not int token"); }
-    virtual double get_double() { throw std::runtime_error("not double token"); }
-    // TODO: return some reference to string instead?
-    virtual std::string get_string() { throw std::runtime_error("not string token"); }
+    virtual uint32_t get_int() { throw std::runtime_error("not an int token"); }
+    virtual double get_double() { throw std::runtime_error("not a double token"); }
+    virtual std::string get_string() { throw std::runtime_error("not a string token"); }
     virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
 };
 
