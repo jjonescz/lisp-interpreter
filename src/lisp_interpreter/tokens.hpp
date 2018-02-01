@@ -12,6 +12,7 @@ public:
     virtual bool is_left_paren() { return false; }
     virtual bool is_right_paren() { return false; }
     virtual bool is_quote() { return false; }
+    virtual bool is_dot() { return false; }
     virtual bool is_int() { return false; }
     virtual bool is_double() { return false; }
     virtual bool is_string() { return false; }
@@ -33,6 +34,10 @@ public:
 class t_quote : public token {
 public:
     bool is_quote() override { return true; }
+};
+class t_dot : public token {
+public:
+    bool is_dot() override { return true; }
 };
 class t_int : public token {
 public:

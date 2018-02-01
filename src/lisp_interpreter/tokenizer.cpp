@@ -39,6 +39,12 @@ void tokenizer::tokenize(istream& input) {
 
 void tokenizer::flush() {
     if (!s_.empty()) {
+        if (s_ == ".") {
+            tokens_.push_back(make_unique<t_dot>());
+            s_.clear();
+            return;
+        }
+        // TODO: use std::stoi instead?
         stringstream ss(s_);
         uint32_t i;
         if (ss >> i) {

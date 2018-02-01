@@ -20,7 +20,7 @@ public:
         quote_(std::make_shared<e_token>(std::make_unique<t_string>("quote"))) {}
     ep parse();
 private:
-    ep parse_list();
+    ep parse_list(bool can_be_dotted_pair);
 
     tlist & toks_;
     ep empty_list_, quote_;
