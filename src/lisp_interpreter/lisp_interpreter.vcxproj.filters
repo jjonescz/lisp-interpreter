@@ -27,6 +27,9 @@
     <ClCompile Include="visitors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="expressions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.hpp">
@@ -42,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="visitors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="environment.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="values.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -147,16 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="expressions.cpp" />
     <ClCompile Include="lisp_interpreter.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="tokenizer.cpp" />
     <ClCompile Include="visitors.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="environment.hpp" />
     <ClInclude Include="expressions.hpp" />
     <ClInclude Include="parser.hpp" />
     <ClInclude Include="tokenizer.hpp" />
     <ClInclude Include="tokens.hpp" />
+    <ClInclude Include="values.hpp" />
     <ClInclude Include="visitors.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,8 +5,8 @@
 #include "expressions.hpp"
 #include "visitors.hpp"
 
-void visitor::visit(const expression& e) {
-    e.accept(*this);
+void visitor::visit(const value& v) {
+    v.accept(*this);
 }
 
 void printer::visit_pair(const e_pair& pair) {
