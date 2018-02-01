@@ -1,6 +1,8 @@
 // parser.cpp
 //
 
+// TODO: parse also ( . ) syntax
+
 #include "parser.hpp"
 
 using namespace std;
