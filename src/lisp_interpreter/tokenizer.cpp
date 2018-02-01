@@ -1,6 +1,5 @@
 // tokenizer.cpp
 //
-// TODO: ignore comments
 
 #include <iostream>
 #include <sstream>
@@ -10,6 +9,7 @@ using namespace std;
 
 void tokenizer::tokenize(istream& input) {
     char c;
+    string comment;
     while (input.good() && (c = input.get()) >= 0) {
         switch (c) {
         case '(':
@@ -23,6 +23,9 @@ void tokenizer::tokenize(istream& input) {
         case '\'':
             flush();
             tokens_.push_back(make_unique<t_quote>());
+            break;
+        case ';':
+            getline(input, comment);
             break;
         default:
             if (isspace(c)) {
