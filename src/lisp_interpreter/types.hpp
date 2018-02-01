@@ -31,7 +31,9 @@ class v_primitive;
 class v_lambda;
 using vp = std::shared_ptr<value>;
 using cvp = const vp;
-using prim_func = cvp(*)(const e_pair&);
+using prim_func = cvp(*)(const std::shared_ptr<e_pair>);
+
+// TODO: are const ptrs a good idea?
 
 class visitor;
 

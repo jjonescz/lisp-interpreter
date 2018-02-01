@@ -1,15 +1,14 @@
 // visitors.cpp
 //
 
-#include <cassert>
 #include "visitors.hpp"
 #include "expressions.hpp"
 #include "tokens.hpp"
 
 using namespace std;
 
-void visitor::visit(cvp v) {
-    v->accept(*this, v);
+cvp visitor::visit(cvp v) {
+    return v->accept(*this, v);
 }
 
 cvp printer::visit_pair(const shared_ptr<e_pair> pair) {
@@ -44,5 +43,10 @@ cvp printer::visit_token(const shared_ptr<e_token> token) {
     else {
         str_ << t->to_string();
     }
+    return move(token);
+}
+
+cvp printer::visit_primitive(const shared_ptr<v_primitive> token) {
+    str_ << "'[primitive function]";
     return move(token);
 }

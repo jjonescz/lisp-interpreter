@@ -8,6 +8,7 @@
 #include "parser.hpp"
 #include "expressions.hpp"
 #include "visitors.hpp"
+#include "evaluator.hpp"
 
 using namespace std;
 
@@ -21,11 +22,12 @@ int main()
         tokenizer(tokens).tokenize(ss);
 
         parser p(tokens);
+        evaluator e;
         do {
             // parse
             ep expr;
             try {
-                expr = p.parse();
+                expr = move(p.parse());
             }
             catch (const parser_error& e) {
                 cerr << "Parsing error: " << e.what() << endl;
@@ -33,8 +35,17 @@ int main()
             }
 
             // evaluate
-            // TODO.
-            printer(cout).visit(expr);
+            vp res;
+            try {
+                res = move(e.visit(expr));
+            }
+            catch (const eval_error& e) {
+                cerr << "Evaluation error: " << e.what() << endl;
+                break;
+            }
+
+            // print
+            printer(cout).visit(res);
             cout << endl;
         } while (!tokens.empty());
 

@@ -10,21 +10,26 @@
 class value {
 public:
     virtual ~value() = default;
-    virtual void accept(visitor& v, cvp& p) const = 0;
-};
-
-class internal_value : public value {
-public:
+    virtual bool is_pair() { return false; }
+    virtual bool is_token() { return false; }
+    virtual cep& get_car() const { throw std::runtime_error("not a pair"); }
+    virtual cep& get_cdr() const { throw std::runtime_error("not a pair"); }
+    virtual ctp& get_token() const { throw std::runtime_error("not a token"); }
+    virtual bool is_list() const { throw std::runtime_error("not a pair"); }
     virtual bool is_primitive() { return false; }
     virtual bool is_lambda() { return false; }
-    virtual cvp eval(const e_pair& args) { throw std::runtime_error("not a function"); }
+    virtual cvp eval(const std::shared_ptr<e_pair> args) { throw std::runtime_error("not a function"); }
+    virtual cvp accept(visitor& v, cvp& p) const = 0;
 };
+
+class internal_value : public value {};
 
 class v_primitive : public internal_value {
 public:
     v_primitive(prim_func func) : func_(func) {}
     bool is_primitive() override { return true; }
-    cvp eval(const e_pair& args) override { return func_(args); }
+    cvp eval(const std::shared_ptr<e_pair> args) override { return func_(args); }
+    cvp accept(visitor& v, cvp& p) const override;
 private:
     prim_func func_;
 };

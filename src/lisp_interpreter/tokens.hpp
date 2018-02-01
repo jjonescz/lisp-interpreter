@@ -20,7 +20,7 @@ public:
     virtual bool is_string() { return false; }
     virtual uint32_t get_int() { throw std::runtime_error("not an int token"); }
     virtual double get_double() { throw std::runtime_error("not a double token"); }
-    virtual std::string get_string() { throw std::runtime_error("not a string token"); }
+    virtual const std::string& get_string() { throw std::runtime_error("not a string token"); }
     virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
 };
 
@@ -66,7 +66,7 @@ class t_string : public token {
 public:
     t_string(const std::string& val) : val_(val) {}
     bool is_string() override { return true; }
-    std::string get_string() override { return val_; }
+    const std::string& get_string() override { return val_; }
     std::string to_string() override { return val_; }
 private:
     std::string val_;

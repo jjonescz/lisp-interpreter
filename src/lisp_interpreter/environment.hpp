@@ -9,9 +9,9 @@
 
 class environment {
 public:
-    environment(const environment& parent) : parent(parent) {}
-    const environment& parent;
-    std::map<std::string, ep> map; // TODO: map field should be read-only
+    environment(std::unique_ptr<environment> parent) : parent(move(parent)) {}
+    const std::unique_ptr<environment> parent;
+    std::map<std::string, vp> map;
 };
 
 #endif

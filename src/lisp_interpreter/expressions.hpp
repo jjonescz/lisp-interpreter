@@ -9,14 +9,7 @@
 #include "types.hpp"
 #include "values.hpp"
 
-class expression : public value {
-public:
-    virtual bool is_pair() { return false; }
-    virtual cep& get_car() const { throw std::runtime_error("not a pair"); }
-    virtual cep& get_cdr() const { throw std::runtime_error("not a pair"); }
-    virtual ctp& get_token() const { throw std::runtime_error("not a token"); }
-    virtual bool is_list() const { throw std::runtime_error("not a pair"); }
-};
+class expression : public value {};
 
 class e_pair : public expression {
 public:
@@ -25,7 +18,7 @@ public:
     cep& get_car() const override { return car_; }
     cep& get_cdr() const override { return cdr_; }
     bool is_list() const override { return list_; }
-    void accept(visitor& v, cvp& p) const override;
+    cvp accept(visitor& v, cvp& p) const override;
 private:
     cep car_, cdr_;
     bool list_;
@@ -34,8 +27,9 @@ private:
 class e_token : public expression {
 public:
     e_token(tp val) : val_(move(val)) {}
+    bool is_token() override { return true; }
     ctp& get_token() const override { return val_; }
-    void accept(visitor& v, cvp& p) const override;
+    cvp accept(visitor& v, cvp& p) const override;
 private:
     ctp val_;
 };
