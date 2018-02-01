@@ -5,7 +5,7 @@
 #define _H_VISITORS
 
 #include <iostream>
-#include "expressions.hpp"
+#include "types.hpp"
 
 class visitor {
 public:

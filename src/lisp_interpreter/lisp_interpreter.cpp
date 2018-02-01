@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <sstream>
+#include "tokens.hpp"
 #include "tokenizer.hpp"
 #include "parser.hpp"
+#include "expressions.hpp"
 #include "visitors.hpp"
 
 using namespace std;

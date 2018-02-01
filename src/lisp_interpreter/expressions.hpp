@@ -6,16 +6,8 @@
 
 #include <memory>
 #include <exception>
-#include "tokens.hpp"
+#include "types.hpp"
 #include "values.hpp"
-
-class expression;
-using ep = std::shared_ptr<expression>;
-using cep = const ep;
-using tp = std::unique_ptr<token>;
-using ctp = const tp;
-
-class visitor;
 
 class expression : public value {
 public:

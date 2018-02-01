@@ -154,6 +154,7 @@
     <ClCompile Include="visitors.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="types.hpp" />
     <ClInclude Include="environment.hpp" />
     <ClInclude Include="expressions.hpp" />
     <ClInclude Include="parser.hpp" />

@@ -5,8 +5,8 @@
 #define _H_TOKENS
 
 #include <string>
-#include <list>
 #include <sstream>
+#include "types.hpp"
 
 class token {
 public:
@@ -71,7 +71,5 @@ public:
 private:
     std::string val_;
 };
-
-using tlist = std::list<std::unique_ptr<token>>;
 
 #endif

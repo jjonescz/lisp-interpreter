@@ -5,8 +5,7 @@
 #define _H_PARSER
 
 #include <stdexcept>
-#include "expressions.hpp"
-#include "tokens.hpp"
+#include "types.hpp"
 
 class parser_error : public std::runtime_error {
 public:
@@ -15,9 +14,7 @@ public:
 
 class parser {
 public:
-    parser(tlist& toks) : toks_(toks),
-        empty_list_(std::make_shared<e_token>(std::make_unique<t_string>("()"))),
-        quote_(std::make_shared<e_token>(std::make_unique<t_string>("quote"))) {}
+    parser(tlist& toks);
     ep parse();
 private:
     ep parse_list(bool can_be_dotted_pair);

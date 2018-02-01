@@ -2,6 +2,7 @@
 //
 
 #include "expressions.hpp"
+#include "tokens.hpp"
 #include "visitors.hpp"
 
 using namespace std;

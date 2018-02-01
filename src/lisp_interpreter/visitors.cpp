@@ -2,8 +2,9 @@
 //
 
 #include <cassert>
-#include "expressions.hpp"
 #include "visitors.hpp"
+#include "expressions.hpp"
+#include "tokens.hpp"
 
 void visitor::visit(const value& v) {
     v.accept(*this);

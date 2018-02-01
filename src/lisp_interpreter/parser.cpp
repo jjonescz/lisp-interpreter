@@ -1,9 +1,16 @@
 // parser.cpp
 //
 
+#include <memory>
 #include "parser.hpp"
+#include "tokens.hpp"
+#include "expressions.hpp"
 
 using namespace std;
+
+parser::parser(tlist& toks) : toks_(toks),
+    empty_list_(std::make_shared<e_token>(std::make_unique<t_string>("()"))),
+    quote_(std::make_shared<e_token>(std::make_unique<t_string>("quote"))) {}
 
 ep parser::parse() {
     if (!toks_.empty()) {
