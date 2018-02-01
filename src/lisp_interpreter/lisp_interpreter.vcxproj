@@ -148,6 +148,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lisp_interpreter.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="tokenizer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="expressions.hpp" />
+    <ClInclude Include="parser.hpp" />
+    <ClInclude Include="tokenizer.hpp" />
+    <ClInclude Include="tokens.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
