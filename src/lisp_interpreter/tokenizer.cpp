@@ -47,16 +47,16 @@ void tokenizer::flush() {
             s_.clear();
             return;
         }
-        // TODO: use std::stoi instead?
         stringstream ss(s_);
         uint32_t i;
-        if (ss >> i) {
+        if (ss >> i && ss.eof()) {
             tokens_.push_back(make_unique<t_int>(i));
             s_.clear();
             return;
         }
+        ss = stringstream(s_);
         double d;
-        if (ss >> d) { // TODO: this will never be true...
+        if (ss >> d && ss.eof()) {
             tokens_.push_back(make_unique<t_double>(d));
             s_.clear();
             return;

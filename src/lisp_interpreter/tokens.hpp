@@ -6,6 +6,7 @@
 
 #include <string>
 #include <list>
+#include <sstream>
 
 class token {
 public:
@@ -53,7 +54,11 @@ public:
     t_double(double val) : val_(val) {}
     bool is_double() override { return true; }
     double get_double() override { return val_; }
-    std::string to_string() override { return std::to_string(val_); }
+    std::string to_string() override {
+        std::stringstream ss;
+        ss << val_;
+        return ss.str();
+    }
 private:
     double val_;
 };
