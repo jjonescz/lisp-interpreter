@@ -15,12 +15,12 @@ class e_pair : public expression {
 public:
     e_pair(ep car, ep cdr);
     bool is_pair() override { return true; }
-    cep& get_car() const override { return car_; } // TODO: this allows outer code to move the pointer, doesn't it?
-    cep& get_cdr() const override { return cdr_; }
+    const ep& get_car() const override { return car_; }
+    const ep& get_cdr() const override { return cdr_; }
     bool is_list() const override { return list_; }
-    cvp accept(visitor& v, cvp& p) const override;
+    vp accept(visitor& v, vp& p) const override;
 private:
-    cep car_, cdr_;
+    const ep car_, cdr_;
     bool list_;
 };
 
@@ -28,10 +28,10 @@ class e_token : public expression {
 public:
     e_token(tp val) : val_(move(val)) {}
     bool is_token() override { return true; }
-    ctp& get_token() const override { return val_; }
-    cvp accept(visitor& v, cvp& p) const override;
+    const tp& get_token() const override { return val_; }
+    vp accept(visitor& v, vp& p) const override;
 private:
-    ctp val_;
+    const tp val_;
 };
 
 #endif

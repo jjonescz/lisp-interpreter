@@ -6,6 +6,6 @@
 
 using namespace std;
 
-cvp v_primitive::accept(visitor& v, cvp& p) const {
+vp v_primitive::accept(visitor& v, vp& p) const {
     return v.visit_primitive(static_pointer_cast<v_primitive>(p));
 }

@@ -7,11 +7,11 @@
 
 using namespace std;
 
-cvp visitor::visit(cvp v) {
+vp visitor::visit(vp v) {
     return v->accept(*this, v);
 }
 
-cvp printer::visit_pair(const shared_ptr<e_pair> pair) {
+vp printer::visit_pair(shared_ptr<e_pair> pair) {
     if (in_list_) {
         str_ << " ";
         in_list_ = false;
@@ -35,7 +35,7 @@ cvp printer::visit_pair(const shared_ptr<e_pair> pair) {
     return move(pair);
 }
 
-cvp printer::visit_token(const shared_ptr<e_token> token) {
+vp printer::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
     if (in_list_ && t->is_string() && t->get_string() == "()") {
         str_ << ")";
@@ -46,7 +46,7 @@ cvp printer::visit_token(const shared_ptr<e_token> token) {
     return move(token);
 }
 
-cvp printer::visit_primitive(const shared_ptr<v_primitive> token) {
+vp printer::visit_primitive(shared_ptr<v_primitive> token) {
     str_ << "'[primitive function]";
     return move(token);
 }

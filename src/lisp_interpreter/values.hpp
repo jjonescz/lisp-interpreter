@@ -12,14 +12,14 @@ public:
     virtual ~value() = default;
     virtual bool is_pair() { return false; }
     virtual bool is_token() { return false; }
-    virtual cep& get_car() const { throw std::runtime_error("not a pair"); }
-    virtual cep& get_cdr() const { throw std::runtime_error("not a pair"); }
-    virtual ctp& get_token() const { throw std::runtime_error("not a token"); }
+    virtual const ep& get_car() const { throw std::runtime_error("not a pair"); }
+    virtual const ep& get_cdr() const { throw std::runtime_error("not a pair"); }
+    virtual const tp& get_token() const { throw std::runtime_error("not a token"); }
     virtual bool is_list() const { throw std::runtime_error("not a pair"); }
     virtual bool is_primitive() { return false; }
     virtual bool is_lambda() { return false; }
-    virtual cvp eval(evaluator& eval, const std::shared_ptr<e_pair> args) { throw std::runtime_error("not a function"); }
-    virtual cvp accept(visitor& v, cvp& p) const = 0;
+    virtual vp eval(evaluator& eval, std::shared_ptr<e_pair> args) { throw std::runtime_error("not a function"); }
+    virtual vp accept(visitor& v, vp& p) const = 0;
 };
 
 class internal_value : public value {};
@@ -28,10 +28,10 @@ class v_primitive : public internal_value {
 public:
     v_primitive(prim_func func) : func_(func) {}
     bool is_primitive() override { return true; }
-    cvp eval(evaluator& eval, const std::shared_ptr<e_pair> args) override { return func_(eval, args); }
-    cvp accept(visitor& v, cvp& p) const override;
+    vp eval(evaluator& eval, std::shared_ptr<e_pair> args) override { return func_(eval, args); }
+    vp accept(visitor& v, vp& p) const override;
 private:
-    prim_func func_;
+    const prim_func func_;
 };
 
 class v_lambda : public internal_value {

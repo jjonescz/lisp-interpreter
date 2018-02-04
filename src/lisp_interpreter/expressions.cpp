@@ -18,10 +18,10 @@ e_pair::e_pair(ep car, ep cdr) : car_(move(car)), cdr_(move(cdr)) {
     }
 }
 
-cvp e_pair::accept(visitor& v, cvp& p) const {
+vp e_pair::accept(visitor& v, vp& p) const {
     return v.visit_pair(static_pointer_cast<e_pair>(p));
 }
 
-cvp e_token::accept(visitor& v, cvp& p) const {
+vp e_token::accept(visitor& v, vp& p) const {
     return v.visit_token(static_pointer_cast<e_token>(p));
 }

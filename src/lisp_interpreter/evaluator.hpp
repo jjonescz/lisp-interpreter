@@ -16,9 +16,9 @@ public:
 class evaluator : public visitor {
 public:
 	evaluator();
-	cvp visit_pair(const std::shared_ptr<e_pair> pair) override;
-	cvp visit_token(const std::shared_ptr<e_token> token) override;
-	cvp visit_primitive(const std::shared_ptr<v_primitive> token) override;
+	vp visit_pair(std::shared_ptr<e_pair> pair) override;
+	vp visit_token(std::shared_ptr<e_token> token) override;
+	vp visit_primitive(std::shared_ptr<v_primitive> token) override;
 private:
 	environment root_;
 };

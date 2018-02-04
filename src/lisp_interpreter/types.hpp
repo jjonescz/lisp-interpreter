@@ -21,9 +21,7 @@ class expression;
 class e_pair;
 class e_token;
 using ep = std::shared_ptr<expression>;
-using cep = const ep;
 using tp = std::unique_ptr<token>;
-using ctp = const tp;
 
 class visitor;
 class evaluator;
@@ -35,9 +33,6 @@ class internal_value;
 class v_primitive;
 class v_lambda;
 using vp = std::shared_ptr<value>;
-using cvp = const vp;
-using prim_func = cvp(*)(evaluator&, const std::shared_ptr<e_pair>);
-
-// TODO: are const ptrs a good idea?
+using prim_func = vp(*)(evaluator&, std::shared_ptr<e_pair>);
 
 #endif
