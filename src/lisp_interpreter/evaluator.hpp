@@ -23,4 +23,10 @@ private:
 	environment root_;
 };
 
+struct quote_func {
+    static const std::string name;
+    static const bool eval = false;
+    static vp handler(vp arg);
+};
+
 #endif

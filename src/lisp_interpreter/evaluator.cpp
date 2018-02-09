@@ -4,6 +4,7 @@
 #include "evaluator.hpp"
 #include "expressions.hpp"
 #include "tokens.hpp"
+#include "func_helper.hpp"
 
 using namespace std;
 
@@ -18,10 +19,7 @@ void check_one_arg(vp args) {
 
 evaluator::evaluator() : root_(nullptr) {
     // initialize environment with default values
-    root_.map["quote"] = make_shared<v_primitive>([](evaluator& eval, vp args) -> vp {
-        check_one_arg(args);
-        return args->get_cdr()->get_car();
-    });
+    root_.map["quote"] = make_shared<v_primitive>(func_helper::one_arg<quote_func>);
     root_.map["car"] = make_shared<v_primitive>([](evaluator& eval, vp args) -> vp {
         check_one_arg(args);
         vp list = eval.visit(args->get_cdr()->get_car());
@@ -29,6 +27,7 @@ evaluator::evaluator() : root_(nullptr) {
         return list->get_car();
     });
 }
+
 
 vp evaluator::visit_pair(std::shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
@@ -54,4 +53,9 @@ vp evaluator::visit_token(std::shared_ptr<e_token> token) {
 
 vp evaluator::visit_primitive(std::shared_ptr<v_primitive> token) {
     throw eval_error("primitive cannot be evaluated");
+}
+
+const string quote_func::name = "quote";
+vp quote_func::handler(vp arg) {
+    return arg;
 }

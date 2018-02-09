@@ -2,7 +2,6 @@
 //
 
 // TODO: check that shared_ptrs are copied only where they should
-// TODO: add function_helper
 
 #ifndef _H_TYPES
 #define _H_TYPES
