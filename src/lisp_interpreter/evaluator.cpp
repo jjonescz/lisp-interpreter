@@ -8,15 +8,6 @@
 
 using namespace std;
 
-void check_one_arg(vp args) {
-    if (!args->get_cdr()->is_pair()) {
-        throw eval_error(args->get_car()->get_token()->get_string() + " must have at least 1 argument");
-    }
-    if (!args->get_cdr()->get_cdr()->is_token()) {
-        throw eval_error(args->get_car()->get_token()->get_string() + " cannot have more than 1 argument");
-    }
-}
-
 evaluator::evaluator() : root_(nullptr) {
     // initialize environment with default values
     root_.map["quote"] = make_shared<v_primitive>(func_helper::exact<quote_func>);
@@ -24,8 +15,9 @@ evaluator::evaluator() : root_(nullptr) {
 }
 
 
-vp evaluator::visit_pair(std::shared_ptr<e_pair> pair) {
+vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
+    // TODO: implement function (probably lambdas only) overloading (by number of arguments)
     vp car = visit(pair->get_car());
     if (car->is_primitive()) {
         return car->eval(*this, pair->get_cdr());
@@ -33,7 +25,7 @@ vp evaluator::visit_pair(std::shared_ptr<e_pair> pair) {
     throw eval_error("value cannot be aplied");
 }
 
-vp evaluator::visit_token(std::shared_ptr<e_token> token) {
+vp evaluator::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
     if (t->is_string()) {
         auto& s = t->get_string();
@@ -43,10 +35,13 @@ vp evaluator::visit_token(std::shared_ptr<e_token> token) {
         }
         throw eval_error("undefined symbol");
     }
-    throw runtime_error("not implemented"); // TODO
+    if (t->is_int() || t->is_double()) {
+        return move(token);
+    }
+    throw runtime_error("unexpected token found");
 }
 
-vp evaluator::visit_primitive(std::shared_ptr<v_primitive> token) {
+vp evaluator::visit_primitive(shared_ptr<v_primitive> token) {
     throw eval_error("primitive cannot be evaluated");
 }
 

@@ -35,6 +35,7 @@ int main()
             }
 
             // evaluate
+            // TODO: actually, use "eval" func from the environment (and eval this "eval" function with evaluator with parsed expr as an argument)
             vp res;
             try {
                 res = move(e.visit(expr));
