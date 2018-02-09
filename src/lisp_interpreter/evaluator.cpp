@@ -34,7 +34,7 @@ vp evaluator::visit_pair(std::shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
     vp car = visit(pair->get_car());
     if (car->is_primitive()) {
-        return car->eval(*this, pair);
+        return car->eval(*this, pair->get_cdr());
     }
     throw eval_error("value cannot be aplied");
 }

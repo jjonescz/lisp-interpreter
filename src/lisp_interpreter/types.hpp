@@ -2,6 +2,8 @@
 //
 
 // TODO: check that shared_ptrs are copied only where they should
+// TODO: add list_helper
+// TODO: add function_helper
 
 #ifndef _H_TYPES
 #define _H_TYPES
@@ -34,6 +36,6 @@ class internal_value;
 class v_primitive;
 class v_lambda;
 using vp = std::shared_ptr<value>;
-using prim_func = vp(*)(evaluator&, std::shared_ptr<e_pair>);
+using prim_func = vp(*)(evaluator&, vp);
 
 #endif
