@@ -15,12 +15,12 @@ public:
 class parser {
 public:
     parser(tlist& toks);
-    ep parse();
+    vp parse();
 private:
-    ep parse_list(bool can_be_dotted_pair);
+    vp parse_list(bool can_be_dotted_pair);
 
     tlist & toks_;
-    ep empty_list_, quote_;
+    vp empty_list_, quote_;
 };
 
 #endif

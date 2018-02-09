@@ -1,6 +1,8 @@
 // types.hpp
 //
 
+// TODO: check that shared_ptrs are copied only where they should
+
 #ifndef _H_TYPES
 #define _H_TYPES
 
@@ -16,12 +18,11 @@ class t_int;
 class t_double;
 class t_string;
 using tlist = std::list<std::unique_ptr<token>>;
+using tp = std::unique_ptr<token>;
 
 class expression;
 class e_pair;
 class e_token;
-using ep = std::shared_ptr<expression>;
-using tp = std::unique_ptr<token>;
 
 class visitor;
 class evaluator;

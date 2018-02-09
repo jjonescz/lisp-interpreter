@@ -12,8 +12,8 @@ public:
     virtual ~value() = default;
     virtual bool is_pair() { return false; }
     virtual bool is_token() { return false; }
-    virtual const ep& get_car() const { throw std::runtime_error("not a pair"); }
-    virtual const ep& get_cdr() const { throw std::runtime_error("not a pair"); }
+    virtual const vp& get_car() const { throw std::runtime_error("not a pair"); }
+    virtual const vp& get_cdr() const { throw std::runtime_error("not a pair"); }
     virtual const tp& get_token() const { throw std::runtime_error("not a token"); }
     virtual bool is_list() const { throw std::runtime_error("not a pair"); }
     virtual bool is_primitive() { return false; }

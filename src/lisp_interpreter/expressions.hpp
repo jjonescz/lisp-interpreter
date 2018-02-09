@@ -13,14 +13,14 @@ class expression : public value {};
 
 class e_pair : public expression {
 public:
-    e_pair(ep car, ep cdr);
+    e_pair(vp car, vp cdr);
     bool is_pair() override { return true; }
-    const ep& get_car() const override { return car_; }
-    const ep& get_cdr() const override { return cdr_; }
+    const vp& get_car() const override { return car_; }
+    const vp& get_cdr() const override { return cdr_; }
     bool is_list() const override { return list_; }
     vp accept(visitor& v, vp& p) const override;
 private:
-    const ep car_, cdr_;
+    const vp car_, cdr_;
     bool list_;
 };
 

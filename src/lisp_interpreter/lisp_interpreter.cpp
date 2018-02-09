@@ -25,7 +25,7 @@ int main()
         evaluator e;
         do {
             // parse
-            ep expr;
+            vp expr;
             try {
                 expr = move(p.parse());
             }

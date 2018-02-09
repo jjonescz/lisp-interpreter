@@ -7,7 +7,7 @@
 
 using namespace std;
 
-e_pair::e_pair(ep car, ep cdr) : car_(move(car)), cdr_(move(cdr)) {
+e_pair::e_pair(vp car, vp cdr) : car_(move(car)), cdr_(move(cdr)) {
     if (cdr_->is_pair()) {
         list_ = cdr_->is_list();
     }
