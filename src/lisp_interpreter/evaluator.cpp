@@ -5,6 +5,7 @@
 #include "expressions.hpp"
 #include "tokens.hpp"
 #include "func_helper.hpp"
+#include "funcs.hpp"
 
 using namespace std;
 
@@ -13,7 +14,6 @@ evaluator::evaluator() : root_(nullptr) {
     root_.map["quote"] = make_shared<v_primitive>(func_helper::exact<quote_func>);
     root_.map["car"] = make_shared<v_primitive>(func_helper::exact<car_func>);
 }
-
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
@@ -43,15 +43,4 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
 
 vp evaluator::visit_primitive(shared_ptr<v_primitive> token) {
     throw eval_error("primitive cannot be evaluated");
-}
-
-const string quote_func::name = "quote";
-vp quote_func::handler(vp arg) {
-    return arg;
-}
-
-const string car_func::name = "car";
-vp car_func::handler(vp arg) {
-    if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
-    return arg->get_car();
 }

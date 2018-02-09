@@ -23,16 +23,4 @@ private:
     environment root_;
 };
 
-#define func(n, a, e) struct n##_func { \
-    static const std::string name; \
-    static const int args = a; \
-    static const bool eval = e; \
-    static vp handler(vp arg); \
-};
-
-func(quote, 1, false)
-func(car, 1, true)
-
-#undef func
-
 #endif
