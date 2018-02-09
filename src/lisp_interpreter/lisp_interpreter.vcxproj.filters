@@ -36,6 +36,9 @@
     <ClCompile Include="values.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="list_helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.hpp">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="evaluator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="list_helper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

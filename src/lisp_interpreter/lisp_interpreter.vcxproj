@@ -150,6 +150,7 @@
     <ClCompile Include="evaluator.cpp" />
     <ClCompile Include="expressions.cpp" />
     <ClCompile Include="lisp_interpreter.cpp" />
+    <ClCompile Include="list_helper.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="tokenizer.cpp" />
     <ClCompile Include="values.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="evaluator.hpp" />
+    <ClInclude Include="list_helper.hpp" />
     <ClInclude Include="types.hpp" />
     <ClInclude Include="environment.hpp" />
     <ClInclude Include="expressions.hpp" />

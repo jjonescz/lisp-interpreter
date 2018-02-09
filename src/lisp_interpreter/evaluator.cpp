@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void check_one_arg(const shared_ptr<e_pair> args) {
+void check_one_arg(vp args) {
     if (!args->get_cdr()->is_pair()) {
         throw eval_error(args->get_car()->get_token()->get_string() + " must have at least 1 argument");
     }
@@ -18,11 +18,11 @@ void check_one_arg(const shared_ptr<e_pair> args) {
 
 evaluator::evaluator() : root_(nullptr) {
     // initialize environment with default values
-    root_.map["quote"] = make_shared<v_primitive>([](evaluator& eval, shared_ptr<e_pair> args) -> vp {
+    root_.map["quote"] = make_shared<v_primitive>([](evaluator& eval, vp args) -> vp {
         check_one_arg(args);
         return args->get_cdr()->get_car();
     });
-    root_.map["car"] = make_shared<v_primitive>([](evaluator& eval, shared_ptr<e_pair> args) -> vp {
+    root_.map["car"] = make_shared<v_primitive>([](evaluator& eval, vp args) -> vp {
         check_one_arg(args);
         vp list = eval.visit(args->get_cdr()->get_car());
         if (!list->is_pair() || !list->is_list()) { throw eval_error("car must be applied to a list"); }
