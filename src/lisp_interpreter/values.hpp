@@ -23,6 +23,7 @@ public:
     virtual vp get_body() { throw std::runtime_error("not a lambda"); }
     virtual ep get_env() { throw std::runtime_error("not a lambda"); }
     virtual vp accept(visitor& v, vp& p) const = 0;
+    bool is_list_or_nil();
 };
 
 class internal_value : public value {};

@@ -7,8 +7,7 @@
 using namespace std;
 
 list_helper::list_helper(value* val) : val_(val) {
-    // TODO: this should also accept "()" token
-    if (!val->is_list()) {
+    if (!val->is_list_or_nil()) {
         throw runtime_error("not a list");
     }
 }

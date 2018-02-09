@@ -28,7 +28,7 @@ func(car, 1, true) {
 func(lambda, 2, false) {
     vp& sign = args[0];
     vp& body = args[1];
-    if (!sign->is_list()) { throw eval_error("lambda expects a list for arguments"); } // TODO: this throws exception! also, it should accept "()"
+    if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
     return make_shared<v_lambda>(sign, body, move(env));
 }
 
