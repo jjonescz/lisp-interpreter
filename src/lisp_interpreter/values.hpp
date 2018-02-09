@@ -19,6 +19,9 @@ public:
     virtual bool is_primitive() { return false; }
     virtual bool is_lambda() { return false; }
     virtual vp eval(evaluator& eval, vp args) { throw std::runtime_error("not a function"); }
+    virtual vp get_args() { throw std::runtime_error("not a lambda"); }
+    virtual vp get_body() { throw std::runtime_error("not a lambda"); }
+    virtual ep get_env() { throw std::runtime_error("not a lambda"); }
     virtual vp accept(visitor& v, vp& p) const = 0;
 };
 
@@ -35,9 +38,15 @@ private:
 };
 
 class v_lambda : public internal_value {
+public:
+    v_lambda(vp val, ep env) : val_(move(val)), env_(move(env)) {}
+    bool is_lambda() override { return true; }
+    vp get_args() override { return val_->get_cdr()->get_car(); }
+    vp get_body() override { return val_->get_cdr()->get_cdr(); }
+    ep get_env() override { return env_; }
 private:
-    const e_pair& val_;
-    const environment& env_; // TODO: shouldn't this be shared_ptr, too?
+    const vp val_;
+    const ep env_;
 };
 
 #endif

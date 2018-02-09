@@ -28,6 +28,7 @@ class visitor;
 class evaluator;
 
 class environment;
+using ep = std::shared_ptr<environment>;
 
 class value;
 class internal_value;

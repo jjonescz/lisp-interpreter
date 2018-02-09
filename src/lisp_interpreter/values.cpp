@@ -3,6 +3,7 @@
 
 #include "values.hpp"
 #include "visitors.hpp"
+#include "list_helper.hpp"
 
 using namespace std;
 

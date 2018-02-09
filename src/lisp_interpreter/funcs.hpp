@@ -9,7 +9,7 @@ using namespace std;
 
 #define func(n, a, e) struct n##_func { \
     static const string name; \
-    static const int args = a; \
+    static const size_t args = a; \
     static const bool eval = e; \
     static vp handler(vp arg); \
 }; \
