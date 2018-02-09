@@ -39,13 +39,15 @@ private:
 
 class v_lambda : public internal_value {
 public:
-    v_lambda(vp val, ep env) : val_(move(val)), env_(move(env)) {}
+    v_lambda(vp args, vp body, ep env) : args_(move(args)), body_(move(body)), env_(move(env)) {}
     bool is_lambda() override { return true; }
-    vp get_args() override { return val_->get_cdr()->get_car(); }
-    vp get_body() override { return val_->get_cdr()->get_cdr(); }
+    vp get_args() override { return args_; }
+    vp get_body() override { return body_; }
     ep get_env() override { return env_; }
+    vp accept(visitor& v, vp& p) const override;
 private:
-    const vp val_;
+    const vp args_;
+    const vp body_;
     const ep env_;
 };
 

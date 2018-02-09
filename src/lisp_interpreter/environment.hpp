@@ -9,8 +9,8 @@
 
 class environment {
 public:
-    environment(std::unique_ptr<environment> parent) : parent(move(parent)) {}
-    const std::unique_ptr<environment> parent;
+    environment(ep parent) : parent(move(parent)) {}
+    const ep parent;
     std::map<std::string, vp> map;
 };
 

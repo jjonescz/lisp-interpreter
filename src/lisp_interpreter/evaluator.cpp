@@ -9,15 +9,17 @@
 
 using namespace std;
 
-evaluator::evaluator() : root_(nullptr) {
+evaluator::evaluator() : env_(make_shared<environment>(nullptr)) {
     // initialize environment with default values
     add_primitive<quote_func>();
     add_primitive<car_func>();
+    add_primitive<lambda_func>();
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
     // TODO: implement function (probably lambdas only) overloading (by number of arguments)
+    // - most likely by creating new internal_value (lambda_group) which will be created or updated by define
     vp car = visit(pair->get_car());
     if (car->is_primitive()) {
         return car->eval(*this, pair->get_cdr());
@@ -29,8 +31,8 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
     if (t->is_string()) {
         auto& s = t->get_string();
-        auto v = root_.map.find(s);
-        if (v != root_.map.end()) {
+        auto v = env_->map.find(s);
+        if (v != env_->map.end()) {
             return v->second;
         }
         throw eval_error("undefined symbol");

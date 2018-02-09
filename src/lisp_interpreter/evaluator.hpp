@@ -20,13 +20,14 @@ public:
     vp visit_token(std::shared_ptr<e_token> token) override;
     vp visit_primitive(std::shared_ptr<v_primitive> token) override;
     vp visit_lambda(std::shared_ptr<v_lambda> lambda) override;
+    const ep& get_current_env() { return env_; }
 private:
     template<typename F>
     void add_primitive() {
-        root_.map[F::name] = make_shared<v_primitive>(func_helper::exact<F>);
+        env_->map[F::name] = make_shared<v_primitive>(func_helper::create<F>);
     }
 
-    environment root_;
+    ep env_;
 };
 
 #endif
