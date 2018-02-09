@@ -19,6 +19,7 @@ public:
     vp visit_pair(std::shared_ptr<e_pair> pair) override;
     vp visit_token(std::shared_ptr<e_token> token) override;
     vp visit_primitive(std::shared_ptr<v_primitive> token) override;
+    vp visit_lambda(std::shared_ptr<v_lambda> lambda) override;
 private:
     template<typename F>
     void add_primitive() {

@@ -44,3 +44,7 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
 vp evaluator::visit_primitive(shared_ptr<v_primitive> token) {
     throw eval_error("primitive cannot be evaluated");
 }
+
+vp evaluator::visit_lambda(std::shared_ptr<v_lambda> lambda) {
+    throw eval_error("lambda cannot be evaluated");
+}
