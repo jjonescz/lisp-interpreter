@@ -19,13 +19,8 @@ void check_one_arg(vp args) {
 
 evaluator::evaluator() : root_(nullptr) {
     // initialize environment with default values
-    root_.map["quote"] = make_shared<v_primitive>(func_helper::one_arg<quote_func>);
-    root_.map["car"] = make_shared<v_primitive>([](evaluator& eval, vp args) -> vp {
-        check_one_arg(args);
-        vp list = eval.visit(args->get_cdr()->get_car());
-        if (!list->is_pair() || !list->is_list()) { throw eval_error("car must be applied to a list"); }
-        return list->get_car();
-    });
+    root_.map["quote"] = make_shared<v_primitive>(func_helper::exact<quote_func>);
+    root_.map["car"] = make_shared<v_primitive>(func_helper::exact<car_func>);
 }
 
 
@@ -58,4 +53,10 @@ vp evaluator::visit_primitive(std::shared_ptr<v_primitive> token) {
 const string quote_func::name = "quote";
 vp quote_func::handler(vp arg) {
     return arg;
+}
+
+const string car_func::name = "car";
+vp car_func::handler(vp arg) {
+    if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
+    return arg->get_car();
 }

@@ -10,14 +10,15 @@
 class func_helper {
 public:
     template<typename F>
-    inline static vp one_arg(evaluator& eval, vp args) {
+    inline static vp exact(evaluator& eval, vp args) {
         size_t c = list_helper(args.get()).count();
-        if (c < 1) {
-            throw eval_error(F::name + " must have at least 1 argument");
+        if (c < F::args) {
+            throw eval_error(F::name + " was called with less than required number of arguments (" + std::to_string(F::args) + ")");
         }
-        if (c > 1) {
-            throw eval_error(F::name + " cannot have more than 1 argument");
+        if (c > F::args) {
+            throw eval_error(F::name + " was called with more than required number of arguments (" + std::to_string(F::args) + ")");
         }
+        // TODO: use F::args in the following code
         vp arg = args->get_car();
         if (F::eval) {
             arg = eval.visit(arg);
