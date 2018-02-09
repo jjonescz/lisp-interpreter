@@ -11,8 +11,8 @@ using namespace std;
 
 evaluator::evaluator() : root_(nullptr) {
     // initialize environment with default values
-    root_.map["quote"] = make_shared<v_primitive>(func_helper::exact<quote_func>);
-    root_.map["car"] = make_shared<v_primitive>(func_helper::exact<car_func>);
+    add_primitive<quote_func>();
+    add_primitive<car_func>();
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
