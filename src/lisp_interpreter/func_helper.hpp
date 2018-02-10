@@ -20,7 +20,7 @@ public:
             throw eval_error(F::name + " was called with more than required number of arguments (" + std::to_string(F::args) + ")");
         }
         array<vp, F::args> arr;
-        for (size_t i = 0; i < F::args; ++i, args = args->get_cdr()) {
+        for (size_t i = 0; i < F::args; ++i, args = args->get_cdr()) { // TODO: use list_helper
             vp car = args->get_car();
             if (F::eval) {
                 car = eval.visit(car);
