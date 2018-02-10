@@ -26,10 +26,11 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
         return car->eval(*this, pair->get_cdr());
     }
     if (car->is_lambda()) {
-        vp args = car->get_args();
+        list_helper args(car->get_args());
+        list_helper vals(pair->get_cdr());
         const vp& body = car->get_body();
-        size_t lambda_count = list_helper(args.get()).count();
-        size_t call_count = list_helper(pair->get_cdr().get()).count();
+        size_t lambda_count = args.count();
+        size_t call_count = vals.count();
         if (lambda_count != call_count) {
             throw eval_error("lambda called with unexpected number of arguments (" + to_string(call_count)
                 + " instead of " + to_string(lambda_count) + ")");
@@ -37,11 +38,8 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
 
         // create an environment for the lambda
         ep env = make_shared<environment>(car->get_env());
-        vp vals = pair->get_cdr();
-        for (size_t i = 0; i < lambda_count; ++i) { // TODO: use list_helper
-            env->map[args->get_car()->get_token()->get_string()] = visit(vals->get_car());
-            args = args->get_cdr();
-            vals = vals->get_cdr();
+        for (auto a = args.begin(), v = vals.begin(); a != args.end(); ++a, ++v) {
+            env->map[(*a)->get_token()->get_string()] = visit(*v);
         }
 
         // evaluate body in that new environment

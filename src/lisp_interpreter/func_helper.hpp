@@ -12,7 +12,8 @@ class func_helper {
 public:
     template<typename F>
     inline static vp create(evaluator& eval, vp args) {
-        size_t c = list_helper(args.get()).count();
+        list_helper list(args);
+        size_t c = list.count();
         if (c < F::args) {
             throw eval_error(F::name + " was called with less than required number of arguments (" + std::to_string(F::args) + ")");
         }
@@ -20,12 +21,13 @@ public:
             throw eval_error(F::name + " was called with more than required number of arguments (" + std::to_string(F::args) + ")");
         }
         array<vp, F::args> arr;
-        for (size_t i = 0; i < F::args; ++i, args = args->get_cdr()) { // TODO: use list_helper
-            vp car = args->get_car();
+        size_t i = 0;
+        for (auto& a : list) {
+            vp val = a;
             if (F::eval) {
-                car = eval.visit(car);
+                val = eval.visit(val);
             }
-            arr[i] = move(car);
+            arr[i++] = move(val);
         }
         return F::handler(eval.get_current_env(), arr);
     }
