@@ -19,9 +19,9 @@ public:
     virtual bool is_primitive() { return false; }
     virtual bool is_lambda() { return false; }
     virtual vp eval(evaluator& eval, vp args) { throw std::runtime_error("not a function"); }
-    virtual vp get_args() { throw std::runtime_error("not a lambda"); }
-    virtual vp get_body() { throw std::runtime_error("not a lambda"); }
-    virtual ep get_env() { throw std::runtime_error("not a lambda"); }
+    virtual const vp& get_args() { throw std::runtime_error("not a lambda"); }
+    virtual const vp& get_body() { throw std::runtime_error("not a lambda"); }
+    virtual const ep& get_env() { throw std::runtime_error("not a lambda"); }
     virtual vp accept(visitor& v, vp& p) const = 0;
     bool is_list_or_nil();
 };
@@ -42,9 +42,9 @@ class v_lambda : public internal_value {
 public:
     v_lambda(vp args, vp body, ep env) : args_(move(args)), body_(move(body)), env_(move(env)) {}
     bool is_lambda() override { return true; }
-    vp get_args() override { return args_; }
-    vp get_body() override { return body_; }
-    ep get_env() override { return env_; }
+    const vp& get_args() override { return args_; }
+    const vp& get_body() override { return body_; }
+    const ep& get_env() override { return env_; }
     vp accept(visitor& v, vp& p) const override;
 private:
     const vp args_;

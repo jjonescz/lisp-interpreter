@@ -6,6 +6,7 @@
 #include "tokens.hpp"
 #include "func_helper.hpp"
 #include "funcs.hpp"
+#include "list_helper.hpp"
 
 using namespace std;
 
@@ -24,6 +25,29 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (car->is_primitive()) {
         return car->eval(*this, pair->get_cdr());
     }
+    if (car->is_lambda()) {
+        const vp& args = car->get_args();
+        const vp& body = car->get_body();
+        size_t lambda_count = list_helper(args.get()).count();
+        size_t call_count = list_helper(pair->get_cdr().get()).count();
+        if (lambda_count != call_count) {
+            throw eval_error("lambda called with unexpected number of arguments (" + to_string(call_count)
+                + " instead of " + to_string(lambda_count) + ")");
+        }
+
+        // create an environment for the lambda
+        ep env = make_shared<environment>(car->get_env());
+        const vp& vals = pair->get_cdr();
+        for (size_t i = 0; i < lambda_count; ++i) {
+            env->map[args->get_car()->get_token()->get_string()] = visit(vals->get_car());
+        }
+
+        // evaluate body in that new environment
+        env_ = env;
+        vp res = visit(body);
+        env_ = env_->parent;
+        return move(res);
+    }
     throw eval_error("value cannot be aplied");
 }
 
@@ -35,7 +59,7 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
         if (v != env_->map.end()) {
             return v->second;
         }
-        throw eval_error("undefined symbol");
+        throw eval_error("undefined symbol (" + s + ")");
     }
     if (t->is_int() || t->is_double()) {
         return move(token);

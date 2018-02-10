@@ -29,6 +29,15 @@ func(lambda, 2, false) {
     vp& sign = args[0];
     vp& body = args[1];
     if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
+
+    // TODO: use iterators and functional style for this (and similar)?
+    for (vp pair = sign; pair->is_pair(); pair = pair->get_cdr()) {
+        const vp& car = pair->get_car();
+        if (!car->is_token() || !car->get_token()->is_string()) {
+            throw eval_error("lambda arguments must be string tokens");
+        }
+    }
+
     return make_shared<v_lambda>(sign, body, move(env));
 }
 
