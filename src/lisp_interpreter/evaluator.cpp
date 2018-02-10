@@ -43,9 +43,9 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
         }
 
         // evaluate body in that new environment
-        env_ = env;
+        swap(env_, env);
         vp res = visit(body);
-        env_ = env_->parent;
+        swap(env_, env);
         return move(res);
     }
     throw eval_error("value cannot be aplied");
@@ -55,11 +55,9 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
     if (t->is_string()) {
         auto& s = t->get_string();
-        auto v = env_->map.find(s);
-        if (v != env_->map.end()) {
-            return v->second;
-        }
-        throw eval_error("undefined symbol (" + s + ")");
+        vp res = env_->try_find(s);
+        if (!res) { throw eval_error("undefined symbol (" + s + ")"); }
+        return res;
     }
     if (t->is_int() || t->is_double()) {
         return move(token);

@@ -21,7 +21,11 @@ public:
         }
         array<vp, F::args> arr;
         for (size_t i = 0; i < F::args; ++i, args = args->get_cdr()) {
-            arr[i] = args->get_car();
+            vp car = args->get_car();
+            if (F::eval) {
+                car = eval.visit(car);
+            }
+            arr[i] = move(car);
         }
         return F::handler(eval.get_current_env(), arr);
     }

@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="environment.cpp" />
     <ClCompile Include="evaluator.cpp" />
     <ClCompile Include="expressions.cpp" />
     <ClCompile Include="lisp_interpreter.cpp" />
