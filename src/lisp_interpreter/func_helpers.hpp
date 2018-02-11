@@ -29,10 +29,10 @@ struct func_wrapper {
         list_helper list(args);
         size_t c = list.count();
         if (c < F::params::args) {
-            throw eval_error(N::name + " was called with less than required number of arguments (" + std::to_string(F::params::args) + ")");
+            throw eval_error(N::name + " was called with less than required number of arguments (" + to_string(F::params::args) + ")");
         }
         if (c > F::params::args && !F::params::can_have_more_args) {
-            throw eval_error(N::name + " was called with more than required number of arguments (" + std::to_string(F::params::args) + ")");
+            throw eval_error(N::name + " was called with more than required number of arguments (" + to_string(F::params::args) + ")");
         }
         vector<vp> vec;
         vec.reserve(c);

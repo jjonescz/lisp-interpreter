@@ -26,7 +26,7 @@ public:
 private:
     template<typename F>
     void add_primitive() {
-        env_->map[F::name] = make_shared<v_primitive>(F::handler::f);
+        env_->map[F::name] = std::make_shared<v_primitive>(F::handler::f);
     }
 
     ep env_;

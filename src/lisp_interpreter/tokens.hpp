@@ -6,6 +6,7 @@
 
 #include <string>
 #include <sstream>
+#include <cmath>
 #include "types.hpp"
 
 class token {

@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-    cout << "Lisp Interpreter by Jan Jones" << endl << endl;
+    cout << "Lisp Interpreter by Jan Jones (2018)" << endl << endl;
 
     tlist tokens;
     common_values com;
