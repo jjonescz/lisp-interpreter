@@ -133,3 +133,14 @@ struct if_func {
     }
 };
 const string if_func::name = "if";
+
+struct eval_func {
+    static const string name;
+    using params = func_params<1>;
+    using eval = const_eval<true>;
+    using handler = func_wrapper<eval_func>;
+    static vp handler_(evaluator& eval, vector<vp>& args) {
+        return eval.visit(move(args[0]));
+    }
+};
+const string eval_func::name = "eval";
