@@ -18,7 +18,8 @@ public:
     parser(tlist& toks, common_values& com);
     vp parse();
 private:
-    vp parse_list(bool can_be_dotted_pair);
+    template<bool can_be_dotted_pair>
+    vp parse_list();
 
     tlist& toks_;
     common_values& com_;

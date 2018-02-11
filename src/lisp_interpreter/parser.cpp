@@ -16,7 +16,7 @@ vp parser::parse() {
         // beginning of a list (or a dotted pair)
         if (toks_.front()->is_left_paren()) {
             toks_.pop_front();
-            return parse_list(true);
+            return parse_list<true>();
         }
 
         // quote special syntax
@@ -37,8 +37,8 @@ vp parser::parse() {
 }
 
 // helper function for parsing lists recursively
-// TODO: make this generic?
-vp parser::parse_list(bool can_be_dotted_pair) {
+template<bool can_be_dotted_pair>
+vp parser::parse_list() {
     if (toks_.empty()) { throw parser_error("missing closing bracket"); }
 
     // end of list
@@ -59,7 +59,7 @@ vp parser::parse_list(bool can_be_dotted_pair) {
         toks_.pop_front();
     }
     else {
-        cdr = parse_list(false);
+        cdr = parse_list<false>();
     }
     return make_shared<e_pair>(move(car), move(cdr));
 }
