@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <array>
+#include <set>
 #include "types.hpp"
 #include "values.hpp"
 #include "evaluator.hpp"
@@ -25,15 +26,18 @@ func(car, 1, true) {
     if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
     return arg->get_car();
 }
-func(lambda, 2, false) {
+func(lambda, 2, false) { // TODO: lambda should actually accept variable number of arguments (which would be its body)
     vp& sign = args[0];
     vp& body = args[1];
     if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
 
-    // TODO: check that all parameters are distinct!
+    set<string> names;
     for (auto& a : list_helper(sign)) {
         if (!a->is_token() || !a->get_token()->is_string()) {
             throw eval_error("lambda arguments must be string tokens");
+        }
+        if (!names.insert(a->get_token()->get_string()).second) {
+            throw eval_error("lambda argument names must be distinct");
         }
     }
 
