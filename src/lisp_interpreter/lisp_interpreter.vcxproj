@@ -160,7 +160,7 @@
   <ItemGroup>
     <ClInclude Include="evaluator.hpp" />
     <ClInclude Include="funcs.hpp" />
-    <ClInclude Include="func_helper.hpp" />
+    <ClInclude Include="func_helpers.hpp" />
     <ClInclude Include="list_helper.hpp" />
     <ClInclude Include="types.hpp" />
     <ClInclude Include="environment.hpp" />

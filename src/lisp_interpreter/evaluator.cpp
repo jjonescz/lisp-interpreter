@@ -4,7 +4,6 @@
 #include "evaluator.hpp"
 #include "expressions.hpp"
 #include "tokens.hpp"
-#include "func_helper.hpp"
 #include "funcs.hpp"
 #include "list_helper.hpp"
 

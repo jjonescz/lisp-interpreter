@@ -74,10 +74,10 @@
     <ClInclude Include="list_helper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="func_helper.hpp">
+    <ClInclude Include="funcs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="funcs.hpp">
+    <ClInclude Include="func_helpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
