@@ -14,7 +14,7 @@ struct quote_func {
     using params = func_params<1>;
     using eval = const_eval<false>;
     using handler = func_wrapper<quote_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         return move(args[0]);
     }
 };
@@ -25,7 +25,7 @@ struct car_func {
     using params = func_params<1>;
     using eval = const_eval<true>;
     using handler = func_wrapper<car_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& arg = args[0];
         if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
         return arg->get_car();
@@ -38,7 +38,7 @@ struct cdr_func {
     using params = func_params<1>;
     using eval = const_eval<true>;
     using handler = func_wrapper<cdr_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& arg = args[0];
         if (!arg->is_pair() || !arg->is_list()) { throw eval_error("cdr must be applied to a list"); }
         return arg->get_cdr();
@@ -51,7 +51,7 @@ struct cons_func {
     using params = func_params<2>;
     using eval = const_eval<true>;
     using handler = func_wrapper<cons_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         return make_shared<e_pair>(move(args[0]), move(args[1]));
     }
 };
@@ -62,7 +62,7 @@ struct lambda_func {
     using params = func_params<1, true>;
     using eval = const_eval<true>;
     using handler = func_wrapper<lambda_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& sign = args[0];
         if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
 
@@ -86,7 +86,7 @@ struct define_func {
     using params = func_params<2>;
     using eval = eval_except_first;
     using handler = func_wrapper<define_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& tok = args[0];
         vp& val = args[1];
         if (!tok->is_token() || !tok->get_token()->is_string()) {
@@ -103,7 +103,7 @@ struct set_func {
     using params = func_params<2>;
     using eval = eval_except_first;
     using handler = func_wrapper<set_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& tok = args[0];
         vp& val = args[1];
         if (!tok->is_token() || !tok->get_token()->is_string()) {
@@ -123,7 +123,7 @@ struct pair_func {
     using params = func_params<1>;
     using eval = const_eval<true>;
     using handler = func_wrapper<pair_func>;
-    static vp handler_(evaluator& eval, vector<vp> args) {
+    static vp handler_(evaluator& eval, vector<vp>& args) {
         return args[0]->is_pair() ? eval.com.true_token : eval.com.nil_token;
     }
 };
