@@ -15,7 +15,7 @@ struct car_func {
     using handler = func_wrapper<car_func>;
     static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& arg = args[0];
-        if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
+        if (!arg->is_pair()) { throw eval_error("car must be applied to a list"); }
         return arg->get_car();
     }
 };
@@ -28,7 +28,7 @@ struct cdr_func {
     using handler = func_wrapper<cdr_func>;
     static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& arg = args[0];
-        if (!arg->is_pair() || !arg->is_list()) { throw eval_error("cdr must be applied to a list"); }
+        if (!arg->is_pair()) { throw eval_error("cdr must be applied to a list"); }
         return arg->get_cdr();
     }
 };

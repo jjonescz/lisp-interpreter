@@ -72,5 +72,7 @@ int main()
 
         tokens.clear();
     }
+
+    cout << endl;
     return 0;
 }
