@@ -20,6 +20,11 @@ size_t list_helper::count() {
     return c;
 }
 
+list_helper::iterator list_helper::begin() {
+    if (val_->is_token()) { return iterator(nullptr); }
+    return iterator(val_);
+}
+
 list_helper::iterator& list_helper::iterator::operator++() {
     val_ = val_->get_cdr();
     if (val_->is_token()) { // end of list is represented by nullptr, instead of "()" token

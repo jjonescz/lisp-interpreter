@@ -23,7 +23,7 @@ public:
         vp val_;
     };
 
-    iterator begin() { return iterator(val_); }
+    iterator begin();
     iterator end() { return iterator(nullptr); }
 private:
     const vp& val_;
