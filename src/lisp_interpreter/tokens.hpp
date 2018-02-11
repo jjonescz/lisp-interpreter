@@ -23,6 +23,7 @@ public:
     virtual const std::string& get_string() { throw std::runtime_error("not a string token"); }
     virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
     virtual bool equals(token& other) { throw std::runtime_error("not a comparable token"); }
+    bool is_nil() { return is_string() && get_string() == "()"; }
 };
 
 class t_left_paren : public token {

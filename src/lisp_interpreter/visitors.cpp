@@ -37,7 +37,7 @@ vp printer::visit_pair(shared_ptr<e_pair> pair) {
 
 vp printer::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
-    if (in_list_ && t->is_string() && t->get_string() == "()") {
+    if (in_list_ && t->is_nil()) {
         str_ << ")";
     }
     else {

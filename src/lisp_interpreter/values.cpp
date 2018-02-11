@@ -8,13 +8,8 @@
 
 using namespace std;
 
-bool value::is_list_or_nil() {
-    if (is_pair() && is_list()) { return true; }
-    if (is_token()) {
-        const tp& t = get_token();
-        return t->is_string() && t->get_string() == "()";
-    }
-    return false;
+bool value::is_nil() {
+    return is_token() && get_token()->is_nil();
 }
 
 vp v_primitive::accept(visitor& v, vp& p) const {

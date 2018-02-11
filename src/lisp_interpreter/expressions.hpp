@@ -21,7 +21,7 @@ public:
     vp accept(visitor& v, vp& p) const override;
 private:
     const vp car_, cdr_;
-    bool list_;
+    const bool list_;
 };
 
 class e_token : public expression {

@@ -76,7 +76,7 @@ struct lambda_func {
             }
         }
 
-        return make_shared<v_lambda>(sign, vector<vp>(++args.begin(), args.end()), eval.get_current_env());
+        return make_shared<v_lambda>(move(sign), vector<vp>(++args.begin(), args.end()), eval.get_current_env());
     }
 };
 const string lambda_func::name = "lambda";
@@ -129,7 +129,6 @@ struct pair_func {
 };
 const string pair_func::name = "pair?";
 
-
 struct eq_func {
     static const string name;
     using params = func_params<2>;
@@ -152,3 +151,20 @@ private:
     }
 };
 const string eq_func::name = "eq?";
+
+struct if_func {
+    static const string name;
+    using params = func_params<3>;
+    struct eval { static bool f(size_t index) { return index == 0; } };
+    using handler = func_wrapper<if_func>;
+    static vp handler_(evaluator& eval, vector<vp>& args) {
+        vp& cond = args[0];
+        vp& t = args[1];
+        vp& f = args[2];
+        if (cond->is_nil()) {
+            return eval.visit(move(f));
+        }
+        return eval.visit(move(t));
+    }
+};
+const string if_func::name = "if";

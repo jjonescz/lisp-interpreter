@@ -24,7 +24,8 @@ public:
     virtual const std::vector<vp>& get_body() { throw std::runtime_error("not a lambda"); }
     virtual const ep& get_env() { throw std::runtime_error("not a lambda"); }
     virtual vp accept(visitor& v, vp& p) const = 0;
-    bool is_list_or_nil();
+    bool is_list_or_nil() { return (is_pair() && is_list()) || is_nil(); }
+    bool is_nil();
 };
 
 class internal_value : public value {};
