@@ -6,6 +6,7 @@ using namespace std;
 #include <vector>
 #include <set>
 #include "func_helpers.hpp"
+#include "expressions.hpp"
 
 struct quote_func {
     static const string name;
@@ -13,7 +14,7 @@ struct quote_func {
     using eval = const_eval<false>;
     using handler = func_wrapper<quote_func>;
     static vp handler_(ep env, vector<vp> args) {
-        return args[0];
+        return move(args[0]);
     }
 };
 const string quote_func::name = "quote";
@@ -43,6 +44,17 @@ struct cdr_func {
     }
 };
 const string cdr_func::name = "cdr";
+
+struct cons_func {
+    static const string name;
+    using params = func_params<2>;
+    using eval = const_eval<true>;
+    using handler = func_wrapper<cons_func>;
+    static vp handler_(ep env, vector<vp> args) {
+        return make_shared<e_pair>(move(args[0]), move(args[1]));
+    }
+};
+const string cons_func::name = "cons";
 
 struct lambda_func {
     static const string name;

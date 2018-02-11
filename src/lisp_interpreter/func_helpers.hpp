@@ -41,6 +41,6 @@ struct func_wrapper {
             }
             vec.push_back(move(val));
         }
-        return F::handler_(eval.get_current_env(), vec);
+        return F::handler_(eval.get_current_env(), move(vec));
     }
 };
