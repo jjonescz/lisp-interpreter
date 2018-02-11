@@ -11,6 +11,7 @@ using namespace std;
 
 evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr)), com(com) {
     // initialize environment with default values
+    env_->map["()"] = com.nil_token;
     add_primitive<quote_func>();
     add_primitive<car_func>();
     add_primitive<cdr_func>();
