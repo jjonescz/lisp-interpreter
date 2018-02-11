@@ -92,5 +92,8 @@
     <ClInclude Include="funcs_math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="funcs_list.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

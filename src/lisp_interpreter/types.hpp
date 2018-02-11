@@ -1,8 +1,6 @@
 // types.hpp
 //
 
-// TODO: check that shared_ptrs are copied only where they should
-
 #ifndef _H_TYPES
 #define _H_TYPES
 
