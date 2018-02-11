@@ -29,7 +29,7 @@ int main()
             // parse
             vp expr;
             try {
-                expr = move(p.parse());
+                expr = p.parse();
             }
             catch (const parser_error& e) {
                 cerr << "Parsing error: " << e.what() << endl;
@@ -40,7 +40,7 @@ int main()
             // TODO: actually, use "eval" func from the environment (and eval this "eval" function with evaluator with parsed expr as an argument)
             vp res;
             try {
-                res = move(e.visit(expr));
+                res = e.visit(expr);
             }
             catch (const eval_error& e) {
                 cerr << "Evaluation error: " << e.what() << endl;
