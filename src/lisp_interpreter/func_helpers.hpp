@@ -1,9 +1,12 @@
 // func_helpers.hpp
 //
 
-using namespace std;
+#ifndef _H_FUNC_HELPERS
+#define _H_FUNC_HELPERS
 
 #include "list_helper.hpp"
+
+using namespace std;
 
 template<size_t A, bool M = false>
 struct func_params {
@@ -44,3 +47,5 @@ struct func_wrapper {
         return F::handler_(eval, vec);
     }
 };
+
+#endif
