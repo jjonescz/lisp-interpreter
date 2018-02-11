@@ -128,3 +128,27 @@ struct pair_func {
     }
 };
 const string pair_func::name = "pair?";
+
+
+struct eq_func {
+    static const string name;
+    using params = func_params<2>;
+    using eval = const_eval<true>;
+    using handler = func_wrapper<eq_func>;
+    static vp handler_(evaluator& eval, vector<vp>& args) {
+        vp& first = args[0];
+        vp& second = args[1];
+        if (first->is_pair() || second->is_pair()) {
+            throw eval_error("eq? can only compare tokens");
+        }
+        return are_equal(first, second) ? eval.com.true_token : eval.com.nil_token;
+    }
+private:
+    static bool are_equal(vp& first, vp& second) {
+        if (first->is_token() && second->is_token()) {
+            return first->get_token()->equals(*second->get_token());
+        }
+        return first == second;
+    }
+};
+const string eq_func::name = "eq?";

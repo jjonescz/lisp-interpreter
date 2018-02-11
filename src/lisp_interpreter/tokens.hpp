@@ -22,6 +22,7 @@ public:
     virtual double get_double() { throw std::runtime_error("not a double token"); }
     virtual const std::string& get_string() { throw std::runtime_error("not a string token"); }
     virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
+    virtual bool equals(token& other) { throw std::runtime_error("not a comparable token"); }
 };
 
 class t_left_paren : public token {
@@ -46,6 +47,7 @@ public:
     bool is_int() override { return true; }
     uint32_t get_int() override { return val_; }
     std::string to_string() override { return std::to_string(val_); }
+    bool equals(token& other) override { return other.is_int() && val_ == other.get_int(); }
 private:
     uint32_t val_;
 };
@@ -59,6 +61,7 @@ public:
         ss << val_;
         return ss.str();
     }
+    bool equals(token& other) override { return other.is_double() && val_ == other.get_double(); }
 private:
     double val_;
 };
@@ -68,6 +71,7 @@ public:
     bool is_string() override { return true; }
     const std::string& get_string() override { return val_; }
     std::string to_string() override { return val_; }
+    bool equals(token& other) override { return other.is_string() && val_ == other.get_string(); }
 private:
     std::string val_;
 };
