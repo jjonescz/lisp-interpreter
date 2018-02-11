@@ -42,20 +42,23 @@ int main()
         parser p(tokens, com);
         do {
             // parse
-            vp expr;
+            vp value;
             try {
-                expr = p.parse();
+                value = p.parse();
             }
             catch (const parser_error& e) {
                 cerr << "Parsing error: " << e.what() << endl;
                 break;
             }
 
+            // wrap expression inside eval call, so that evaluation
+            // can be effectively overwritten by the running program
+            value = make_shared<e_pair>(com.eval_token, make_shared<e_pair>(
+                make_shared<e_pair>(com.quote_token, make_shared<e_pair>(move(value), com.nil_token)), com.nil_token));
+
             // evaluate
-            // TODO: actually, use "eval" func from the environment (and eval this "eval" function with evaluator with parsed expr as an argument)
-            vp res;
             try {
-                res = e.visit(expr);
+                value = e.visit(move(value));
             }
             catch (const eval_error& e) {
                 cerr << "Evaluation error: " << e.what() << endl;
@@ -63,7 +66,7 @@ int main()
             }
 
             // print
-            printer(cout).visit(res);
+            printer(cout).visit(move(value));
             cout << endl;
         } while (!tokens.empty());
 

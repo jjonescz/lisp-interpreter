@@ -10,7 +10,7 @@ class common_values {
 public:
 	common_values();
 
-	const vp nil_token, quote_token, true_token;
+	const vp nil_token, quote_token, true_token, eval_token;
 };
 
 #endif
