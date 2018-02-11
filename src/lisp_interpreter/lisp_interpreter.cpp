@@ -9,20 +9,22 @@
 #include "expressions.hpp"
 #include "visitors.hpp"
 #include "evaluator.hpp"
+#include "common_values.hpp"
 
 using namespace std;
 
 int main()
 {
     tlist tokens;
-    evaluator e;
+    common_values com;
+    evaluator e(com);
     for (string line; getline(cin, line);)
     {
         // tokenize
         stringstream ss(line);
         tokenizer(tokens).tokenize(ss);
 
-        parser p(tokens);
+        parser p(tokens, com);
         do {
             // parse
             vp expr;

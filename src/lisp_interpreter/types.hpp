@@ -37,4 +37,6 @@ class v_lambda;
 using vp = std::shared_ptr<value>;
 using prim_func = vp(*)(evaluator&, vp);
 
+class common_values;
+
 #endif

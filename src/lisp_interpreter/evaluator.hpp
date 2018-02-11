@@ -15,12 +15,14 @@ public:
 
 class evaluator : public visitor {
 public:
-    evaluator();
+    evaluator(common_values& com);
     vp visit_pair(std::shared_ptr<e_pair> pair) override;
     vp visit_token(std::shared_ptr<e_token> token) override;
     vp visit_primitive(std::shared_ptr<v_primitive> primitive) override;
     vp visit_lambda(std::shared_ptr<v_lambda> lambda) override;
     const ep& get_current_env() { return env_; }
+
+    common_values& com;
 private:
     template<typename F>
     void add_primitive() {

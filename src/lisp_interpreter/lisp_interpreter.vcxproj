@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="common_values.cpp" />
     <ClCompile Include="environment.cpp" />
     <ClCompile Include="evaluator.cpp" />
     <ClCompile Include="expressions.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="visitors.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="common_values.hpp" />
     <ClInclude Include="evaluator.hpp" />
     <ClInclude Include="funcs.hpp" />
     <ClInclude Include="func_helpers.hpp" />

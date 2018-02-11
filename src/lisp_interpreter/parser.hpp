@@ -14,13 +14,13 @@ public:
 
 class parser {
 public:
-    parser(tlist& toks);
+    parser(tlist& toks, common_values& com);
     vp parse();
 private:
     vp parse_list(bool can_be_dotted_pair);
 
-    tlist & toks_;
-    vp empty_list_, quote_;
+    tlist& toks_;
+    common_values& com_;
 };
 
 #endif

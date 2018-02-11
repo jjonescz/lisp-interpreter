@@ -9,7 +9,7 @@
 
 using namespace std;
 
-evaluator::evaluator() : env_(make_shared<environment>(nullptr)) {
+evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr)), com(com) {
     // initialize environment with default values
     add_primitive<quote_func>();
     add_primitive<car_func>();
@@ -18,6 +18,7 @@ evaluator::evaluator() : env_(make_shared<environment>(nullptr)) {
     add_primitive<lambda_func>();
     add_primitive<define_func>();
     add_primitive<set_func>();
+    add_primitive<pair_func>();
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
