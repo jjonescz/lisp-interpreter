@@ -44,3 +44,19 @@ struct cons_func {
     }
 };
 const string cons_func::name = "cons";
+
+struct list_func {
+    static const string name;
+    using params = func_params<0, true>;
+    using eval = const_eval<true>;
+    using handler = func_wrapper<list_func>;
+    static vp handler_(evaluator& eval, vector<vp>& args) {
+        return make_list(eval, args.begin(), args.end());
+    }
+private:
+    static vp make_list(evaluator& eval, vector<vp>::iterator start, vector<vp>::iterator end) {
+        if (start == end) { return eval.com.nil_token; }
+        return make_shared<e_pair>(move(*start), make_list(eval, start + 1, end));
+    }
+};
+const string list_func::name = "list";

@@ -16,6 +16,7 @@ evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr
     add_primitive<car_func>();
     add_primitive<cdr_func>();
     add_primitive<cons_func>();
+    add_primitive<list_func>();
     add_primitive<lambda_func>();
     add_primitive<define_func>();
     add_primitive<set_func>();
