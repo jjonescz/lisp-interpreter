@@ -14,6 +14,7 @@ bool value::is_list_or_nil() {
         const tp& t = get_token();
         return t->is_string() && t->get_string() == "()";
     }
+    return false;
 }
 
 vp v_primitive::accept(visitor& v, vp& p) const {

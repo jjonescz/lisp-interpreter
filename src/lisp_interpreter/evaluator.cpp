@@ -29,7 +29,6 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (car->is_lambda()) {
         list_helper args(car->get_args());
         list_helper vals(pair->get_cdr());
-        const vp& body = car->get_body();
         size_t lambda_count = args.count();
         size_t call_count = vals.count();
         if (lambda_count != call_count) {
@@ -45,7 +44,10 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
 
         // evaluate body in that new environment
         swap(env_, env);
-        vp res = visit(body);
+        vp res;
+        for (auto& statement : car->get_body()) {
+            res = visit(statement);
+        }
         swap(env_, env);
         return move(res);
     }

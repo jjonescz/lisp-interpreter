@@ -33,14 +33,15 @@ func_handler(n)
 func_exact(quote, 1, false) {
     return args[0];
 }
+
 func_exact(car, 1, true) {
     vp& arg = args[0];
     if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
     return arg->get_car();
 }
+
 func_more(lambda, 2, false) {
     vp& sign = args[0];
-    vp& body = args[1]; // TODO: process also other statements inside the body
     if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
 
     set<string> names;
@@ -53,8 +54,10 @@ func_more(lambda, 2, false) {
         }
     }
 
-    return make_shared<v_lambda>(sign, body, move(env));
+    return make_shared<v_lambda>(sign, vector<vp>(++args.begin(), args.end()), move(env));
 }
+
+// TODO: set! should probably only set root environment's values and maybe also fail if the variable wasn't defined before
 func_struct(set, "set!", 2, false)
 func_eval(set) { return index != 0; }
 func_handler(set) {
@@ -67,4 +70,10 @@ func_handler(set) {
     return move(val);
 }
 
-#undef func_struct, func_eval, func_handler, func, func_auto, func_exact, func_more
+#undef func_struct
+#undef func_eval
+#undef func_handler
+#undef func
+#undef func_auto
+#undef func_exact
+#undef func_more

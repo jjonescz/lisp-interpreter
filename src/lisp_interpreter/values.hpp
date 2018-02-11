@@ -5,6 +5,7 @@
 #define _H_VALUES
 
 #include <memory>
+#include <vector>
 #include "types.hpp"
 
 class value {
@@ -20,7 +21,7 @@ public:
     virtual bool is_lambda() { return false; }
     virtual vp eval(evaluator& eval, vp args) { throw std::runtime_error("not a function"); }
     virtual const vp& get_args() { throw std::runtime_error("not a lambda"); }
-    virtual const vp& get_body() { throw std::runtime_error("not a lambda"); }
+    virtual const std::vector<vp>& get_body() { throw std::runtime_error("not a lambda"); }
     virtual const ep& get_env() { throw std::runtime_error("not a lambda"); }
     virtual vp accept(visitor& v, vp& p) const = 0;
     bool is_list_or_nil();
@@ -40,15 +41,15 @@ private:
 
 class v_lambda : public internal_value {
 public:
-    v_lambda(vp args, vp body, ep env) : args_(move(args)), body_(move(body)), env_(move(env)) {}
+    v_lambda(vp args, std::vector<vp> body, ep env) : args_(move(args)), body_(move(body)), env_(move(env)) {}
     bool is_lambda() override { return true; }
     const vp& get_args() override { return args_; }
-    const vp& get_body() override { return body_; }
+    const std::vector<vp>& get_body() override { return body_; }
     const ep& get_env() override { return env_; }
     vp accept(visitor& v, vp& p) const override;
 private:
     const vp args_;
-    const vp body_;
+    const std::vector<vp> body_;
     const ep env_;
 };
 
