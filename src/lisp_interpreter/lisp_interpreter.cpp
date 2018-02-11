@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 #include "tokens.hpp"
 #include "tokenizer.hpp"
 #include "parser.hpp"
@@ -15,14 +16,28 @@ using namespace std;
 
 int main()
 {
+    cout << "Lisp Interpreter by Jan Jones" << endl << endl;
+
     tlist tokens;
     common_values com;
     evaluator e(com);
-    for (string line; getline(cin, line);)
+    while (cin.good() && !cin.eof())
     {
-        // tokenize
-        stringstream ss(line);
-        tokenizer(tokens).tokenize(ss);
+        // tokenize user's input (until closing brackets match opening ones)
+        cout << "< ";
+        for (string line; getline(cin, line);) {
+            stringstream ss(line);
+            tokenizer(tokens).tokenize(ss);
+
+            // check brackets' pairing
+            if (count_if(tokens.begin(), tokens.end(), [](tp& t) { return t->is_left_paren(); })
+                <= count_if(tokens.begin(), tokens.end(), [](tp& t) { return t->is_right_paren(); })) {
+                break;
+            }
+            cout << ". ";
+        }
+
+        if (tokens.empty()) { continue; }
 
         parser p(tokens, com);
         do {
