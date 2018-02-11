@@ -57,11 +57,13 @@ struct op_func {
             throw eval_error(O::name + " requires tokens for arguments");
         }
         if (all_of(args.begin(), args.end(), [](vp& x) { return x->get_token()->is_int(); })) {
-            return make_shared<e_token>(make_unique<t_int>(accumulate(args.begin(), args.end(), O::neutral_,
+            int32_t first = args.empty() ? O::neutral_ : args[0]->get_token()->get_int();
+            return make_shared<e_token>(make_unique<t_int>(accumulate(++args.begin(), args.end(), first,
                 [](int32_t a, vp& b) { return O::template op_<int32_t>(a, b->get_token()->get_int()); })));
         }
         if (all_of(args.begin(), args.end(), [](vp& x) { return  x->get_token()->is_int() || x->get_token()->is_double(); })) {
-            return make_shared<e_token>(make_unique<t_double>(accumulate(args.begin(), args.end(), (double)O::neutral_,
+            double first = args.empty() ? O::neutral_ : args[0]->get_token()->to_double();
+            return make_shared<e_token>(make_unique<t_double>(accumulate(++args.begin(), args.end(), first,
                 [](double a, vp& b) { return O::template op_<double>(a, b->get_token()->to_double()); })));
         }
         throw eval_error(O::name + " requires only numeric tokens");
