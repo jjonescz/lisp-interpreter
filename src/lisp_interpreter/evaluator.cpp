@@ -30,8 +30,6 @@ evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
-    // TODO: implement function (probably lambdas only) overloading (by number of arguments)
-    // - most likely by creating new internal_value (lambda_group) which will be created or updated by define
     vp car = visit(pair->get_car());
     if (car->is_primitive()) {
         return car->eval(*this, pair->get_cdr());

@@ -62,7 +62,7 @@ const string cons_func::name = "cons";
 struct lambda_func {
     static const string name;
     using params = func_params<1, true>;
-    using eval = const_eval<true>;
+    using eval = const_eval<false>;
     using handler = func_wrapper<lambda_func>;
     static vp handler_(evaluator& eval, vector<vp>& args) {
         vp& sign = args[0];
