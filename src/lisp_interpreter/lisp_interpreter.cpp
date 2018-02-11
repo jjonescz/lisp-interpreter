@@ -15,6 +15,7 @@ using namespace std;
 int main()
 {
     tlist tokens;
+    evaluator e;
     for (string line; getline(cin, line);)
     {
         // tokenize
@@ -22,7 +23,6 @@ int main()
         tokenizer(tokens).tokenize(ss);
 
         parser p(tokens);
-        evaluator e;
         do {
             // parse
             vp expr;

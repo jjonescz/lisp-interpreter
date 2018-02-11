@@ -22,11 +22,13 @@ public:
         }
         vector<vp> vec;
         vec.reserve(c);
+        bool except = F::except_first;
         for (auto& a : list) {
             vp val = a;
-            if (F::eval) {
+            if (F::eval ^ except) {
                 val = eval.visit(val);
             }
+            except = false;
             vec.push_back(move(val));
         }
         return F::handler(eval.get_current_env(), vec);

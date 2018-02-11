@@ -15,6 +15,7 @@ evaluator::evaluator() : env_(make_shared<environment>(nullptr)) {
     add_primitive<quote_func>();
     add_primitive<car_func>();
     add_primitive<lambda_func>();
+    add_primitive<set_func>();
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {

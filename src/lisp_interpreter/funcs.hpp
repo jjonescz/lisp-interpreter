@@ -9,19 +9,25 @@ using namespace std;
 #include "values.hpp"
 #include "evaluator.hpp"
 
-#define func_(n, a, e, m) struct n##_func { \
+#define func_(n, s, a, e, m, f) struct n##_func { \
     static const string name; \
     static const size_t args = a; \
     static const bool more = m; \
     static const bool eval = e; \
+    static const bool except_first = f; \
     static vp handler(ep env, vector<vp> args); \
 }; \
-const string n##_func::name = #n; \
+const string n##_func::name = s; \
 vp n##_func::handler(ep env, vector<vp> args) // TODO: maybe make eval a function
 
-#define func(n, a, e) func_(n, a, e, false)
-#define func_more(n, a, e) func_(n, a, e, true)
+// macro shortcuts
+#define func_auto(n, a, e, m, f) func_(n, #n, a, e, m, f)
+#define func(n, a, e) func_auto(n, a, e, false, false)
+#define func_more(n, a, e) func_auto(n, a, e, true, false)
+#define func_explicit(n, s, a, e) func_(n, s, a, e, false, false)
+#define func_explicit_except_first(n, s, a, e) func_(n, s, a, e, false, true)
 
+// definitions of internal functions
 func(quote, 1, false) {
     return args[0];
 }
@@ -47,5 +53,14 @@ func_more(lambda, 2, false) {
 
     return make_shared<v_lambda>(sign, body, move(env));
 }
+func_explicit_except_first(set, "set!", 2, true) {
+    vp& tok = args[0];
+    vp& val = args[1];
+    if (!tok->is_token() || !tok->get_token()->is_string()) {
+        throw eval_error("set! expects string token as its first argument");
+    }
+    env->map[tok->get_token()->get_string()] = val;
+    return move(val);
+}
 
-#undef func_, func, func_more
+#undef func_, func_auto, func, func_more, func_explicit, func_explicit_except_first
