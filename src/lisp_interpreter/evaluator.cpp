@@ -15,6 +15,7 @@ evaluator::evaluator() : env_(make_shared<environment>(nullptr)) {
     add_primitive<quote_func>();
     add_primitive<car_func>();
     add_primitive<lambda_func>();
+    add_primitive<define_func>();
     add_primitive<set_func>();
 }
 
@@ -58,9 +59,9 @@ vp evaluator::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
     if (t->is_string()) {
         auto& s = t->get_string();
-        vp res = env_->try_find(s);
+        vp *res = env_->try_find(s);
         if (!res) { throw eval_error("undefined symbol (" + s + ")"); }
-        return res;
+        return *res;
     }
     if (t->is_int() || t->is_double()) {
         return move(token);

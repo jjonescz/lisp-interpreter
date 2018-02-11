@@ -10,7 +10,7 @@
 class environment {
 public:
     environment(ep parent) : parent(move(parent)) {}
-    vp try_find(std::string key);
+    vp* try_find(std::string key);
 
     const ep parent;
     std::map<std::string, vp> map;

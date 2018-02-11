@@ -1,6 +1,8 @@
 // funcs.hpp
 //
 
+// TODO: do this somehow without macros?
+
 using namespace std;
 
 #include <vector>
@@ -22,6 +24,7 @@ const string n##_func::name = s;
 #define func_handler(n) vp n##_func::handler(ep env, vector<vp> args)
 
 // macro shortcuts
+#define func_struct_auto(n, a, m) func_struct(n, #n, a, m)
 #define func(n, s, a, e, m) func_struct(n, s, a, m) \
 func_eval(n) { return e; } \
 func_handler(n)
@@ -57,7 +60,19 @@ func_more(lambda, 2, false) {
     return make_shared<v_lambda>(sign, vector<vp>(++args.begin(), args.end()), move(env));
 }
 
-// TODO: set! should probably only set root environment's values and maybe also fail if the variable wasn't defined before
+// TODO: advance this further
+func_struct_auto(define, 2, false)
+func_eval(define) { return index != 0; }
+func_handler(define) {
+    vp& tok = args[0];
+    vp& val = args[1];
+    if (!tok->is_token() || !tok->get_token()->is_string()) {
+        throw eval_error("define expects string token as its first argument");
+    }
+    env->map[tok->get_token()->get_string()] = val;
+    return move(val);
+}
+
 func_struct(set, "set!", 2, false)
 func_eval(set) { return index != 0; }
 func_handler(set) {
@@ -66,13 +81,17 @@ func_handler(set) {
     if (!tok->is_token() || !tok->get_token()->is_string()) {
         throw eval_error("set! expects string token as its first argument");
     }
-    env->map[tok->get_token()->get_string()] = val;
+    auto& key = tok->get_token()->get_string();
+    vp *entry = env->try_find(key);
+    if (!entry) { throw eval_error(key + " is undefined"); }
+    *entry = val;
     return move(val);
 }
 
 #undef func_struct
 #undef func_eval
 #undef func_handler
+#undef func_struct_auto
 #undef func
 #undef func_auto
 #undef func_exact
