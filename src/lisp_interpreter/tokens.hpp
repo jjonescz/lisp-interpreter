@@ -63,6 +63,12 @@ public:
     std::string to_string() override {
         std::stringstream ss;
         ss << val_;
+
+        // if double has no fractional part, print decimal point anyway,
+        // so that it can be distinguished from integer
+        double x;
+        if (modf(val_, &x) == 0) { ss << ".0"; }
+
         return ss.str();
     }
     bool equals(token& other) override { return other.is_double() && val_ == other.get_double(); }
