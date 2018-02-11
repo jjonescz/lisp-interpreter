@@ -3,20 +3,24 @@
 
 using namespace std;
 
-#include <array>
+#include <vector>
 #include <set>
 #include "types.hpp"
 #include "values.hpp"
 #include "evaluator.hpp"
 
-#define func(n, a, e) struct n##_func { \
+#define func_(n, a, e, m) struct n##_func { \
     static const string name; \
     static const size_t args = a; \
+    static const bool more = m; \
     static const bool eval = e; \
-    static vp handler(ep env, array<vp, a> args); \
+    static vp handler(ep env, vector<vp> args); \
 }; \
 const string n##_func::name = #n; \
-vp n##_func::handler(ep env, array<vp, a> args)
+vp n##_func::handler(ep env, vector<vp> args) // TODO: maybe make eval a function
+
+#define func(n, a, e) func_(n, a, e, false)
+#define func_more(n, a, e) func_(n, a, e, true)
 
 func(quote, 1, false) {
     return args[0];
@@ -26,9 +30,9 @@ func(car, 1, true) {
     if (!arg->is_pair() || !arg->is_list()) { throw eval_error("car must be applied to a list"); }
     return arg->get_car();
 }
-func(lambda, 2, false) { // TODO: lambda should actually accept variable number of arguments (which would be its body)
+func_more(lambda, 2, false) {
     vp& sign = args[0];
-    vp& body = args[1];
+    vp& body = args[1]; // TODO: process also other statements inside the body
     if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
 
     set<string> names;
@@ -44,4 +48,4 @@ func(lambda, 2, false) { // TODO: lambda should actually accept variable number 
     return make_shared<v_lambda>(sign, body, move(env));
 }
 
-#undef func
+#undef func_, func, func_more

@@ -4,7 +4,7 @@
 #ifndef _H_FUNC_HELPER
 #define _H_FUNC_HELPER
 
-#include <array>
+#include <vector>
 #include "types.hpp"
 #include "list_helper.hpp"
 
@@ -17,19 +17,19 @@ public:
         if (c < F::args) {
             throw eval_error(F::name + " was called with less than required number of arguments (" + std::to_string(F::args) + ")");
         }
-        if (c > F::args) {
+        if (c > F::args && !F::more) {
             throw eval_error(F::name + " was called with more than required number of arguments (" + std::to_string(F::args) + ")");
         }
-        array<vp, F::args> arr;
-        size_t i = 0;
+        vector<vp> vec;
+        vec.reserve(c);
         for (auto& a : list) {
             vp val = a;
             if (F::eval) {
                 val = eval.visit(val);
             }
-            arr[i++] = move(val);
+            vec.push_back(move(val));
         }
-        return F::handler(eval.get_current_env(), arr);
+        return F::handler(eval.get_current_env(), vec);
     }
 };
 
