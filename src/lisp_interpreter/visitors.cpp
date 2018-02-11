@@ -46,9 +46,9 @@ vp printer::visit_token(shared_ptr<e_token> token) {
     return move(token);
 }
 
-vp printer::visit_primitive(shared_ptr<v_primitive> token) {
+vp printer::visit_primitive(shared_ptr<v_primitive> primitive) {
     str_ << "'[primitive function]";
-    return move(token);
+    return move(primitive);
 }
 
 vp printer::visit_lambda(std::shared_ptr<v_lambda> lambda) {

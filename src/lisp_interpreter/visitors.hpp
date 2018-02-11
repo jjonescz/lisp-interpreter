@@ -13,7 +13,7 @@ public:
     vp visit(vp v);
     virtual vp visit_pair(std::shared_ptr<e_pair> pair) = 0;
     virtual vp visit_token(std::shared_ptr<e_token> token) = 0;
-    virtual vp visit_primitive(std::shared_ptr<v_primitive> token) = 0;
+    virtual vp visit_primitive(std::shared_ptr<v_primitive> primitive) = 0;
     virtual vp visit_lambda(std::shared_ptr<v_lambda> lambda) = 0;
 };
 
@@ -22,7 +22,7 @@ public:
     printer(std::ostream& str) : str_(str), in_list_(false) {}
     vp visit_pair(std::shared_ptr<e_pair> pair) override;
     vp visit_token(std::shared_ptr<e_token> token) override;
-    vp visit_primitive(std::shared_ptr<v_primitive> token) override;
+    vp visit_primitive(std::shared_ptr<v_primitive> primitive) override;
     vp visit_lambda(std::shared_ptr<v_lambda> lambda) override;
 private:
     std::ostream& str_;
