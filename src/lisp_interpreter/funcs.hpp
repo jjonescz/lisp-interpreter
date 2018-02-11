@@ -43,6 +43,12 @@ func_exact(car, 1, true) {
     return arg->get_car();
 }
 
+func_exact(cdr, 1, true) {
+    vp& arg = args[0];
+    if (!arg->is_pair() || !arg->is_list()) { throw eval_error("cdr must be applied to a list"); }
+    return arg->get_cdr();
+}
+
 func_more(lambda, 2, false) {
     vp& sign = args[0];
     if (!sign->is_list_or_nil()) { throw eval_error("lambda expects a list for arguments"); }
