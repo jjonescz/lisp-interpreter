@@ -20,6 +20,7 @@ public:
     virtual bool is_string() { return false; }
     virtual uint32_t get_int() { throw std::runtime_error("not an int token"); }
     virtual double get_double() { throw std::runtime_error("not a double token"); }
+    virtual double to_double() { throw std::runtime_error("not a numeric token"); }
     virtual const std::string& get_string() { throw std::runtime_error("not a string token"); }
     virtual std::string to_string() { throw std::runtime_error("not a stringifiable token"); }
     virtual bool equals(token& other) { throw std::runtime_error("not a comparable token"); }
@@ -47,6 +48,7 @@ public:
     t_int(uint32_t val) : val_(val) {}
     bool is_int() override { return true; }
     uint32_t get_int() override { return val_; }
+    double to_double() override { return val_; }
     std::string to_string() override { return std::to_string(val_); }
     bool equals(token& other) override { return other.is_int() && val_ == other.get_int(); }
 private:
@@ -57,6 +59,7 @@ public:
     t_double(double val) : val_(val) {}
     bool is_double() override { return true; }
     double get_double() override { return val_; }
+    double to_double() override { return val_; }
     std::string to_string() override {
         std::stringstream ss;
         ss << val_;
