@@ -1,4 +1,5 @@
-// types.hpp
+// types.hpp : forward definitions of types to be used across heavily cross-referenced header files;
+// it also contains some shortcuts for types often used all over the code 
 //
 
 #ifndef _H_TYPES

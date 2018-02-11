@@ -1,4 +1,4 @@
-// tokens.hpp
+// tokens.hpp : classes for tokens returned by tokenizer and processed by parser
 //
 
 #ifndef _H_TOKENS

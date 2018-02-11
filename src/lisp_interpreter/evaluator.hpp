@@ -13,6 +13,8 @@ public:
     eval_error(const std::string& msg) : std::runtime_error(msg) {}
 };
 
+// this visitor visits a tree, evaluates its nodes as dictated by the rules
+// of our simple LISP dialect and returns the "evaluated tree"
 class evaluator : public visitor {
 public:
     evaluator(common_values& com);
@@ -24,6 +26,7 @@ public:
 
     common_values& com;
 private:
+    // a helper function to avoid code repetition inside constructor
     template<typename F>
     void add_primitive() {
         env_->map[F::name] = std::make_shared<v_primitive>(F::handler::f);

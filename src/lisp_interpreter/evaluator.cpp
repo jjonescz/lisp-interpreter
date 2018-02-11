@@ -10,7 +10,8 @@
 using namespace std;
 
 evaluator::evaluator(common_values& com) : com(com), env_(make_shared<environment>(nullptr)) {
-    // initialize environment with default values
+    // initialize environment with default values;
+    // all of these values can be redefined at run-time
     env_->map["()"] = com.nil_token;
     add_primitive<quote_func>();
     add_primitive<car_func>();
@@ -31,11 +32,16 @@ evaluator::evaluator(common_values& com) : com(com), env_(make_shared<environmen
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
+    // get a function to be applied
     if (!pair->is_list()) { throw eval_error("only proper lists can be evaluated"); }
     vp car = visit(pair->get_car());
+
+    // apply primitive function
     if (car->is_primitive()) {
         return car->eval(*this, pair->get_cdr());
     }
+
+    // apply lambda
     if (car->is_lambda()) {
         list_helper args(car->get_args());
         list_helper vals(pair->get_cdr());
@@ -61,22 +67,30 @@ vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
         swap(env_, env);
         return move(res);
     }
+
     throw eval_error("value cannot be aplied");
 }
 
 vp evaluator::visit_token(shared_ptr<e_token> token) {
     auto& t = token->get_token();
+
+    // variable
     if (t->is_string()) {
         auto& s = t->get_string();
         vp *res = env_->try_find(s);
         if (!res) { throw eval_error("undefined symbol (" + s + ")"); }
         return *res;
     }
+
+    // literal
     if (t->is_int() || t->is_double()) {
         return move(token);
     }
+
     throw runtime_error("unexpected token found");
 }
+
+// primitive functions and lambdas evaluate to themselves (like numbers do)
 
 vp evaluator::visit_primitive(shared_ptr<v_primitive> primitive) {
     return move(primitive);

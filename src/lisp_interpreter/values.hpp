@@ -1,4 +1,4 @@
-// values.hpp
+// values.hpp : contains the value class, internal_value class, and descendants of internal_value class
 //
 
 #ifndef _H_VALUES
@@ -8,6 +8,7 @@
 #include <vector>
 #include "types.hpp"
 
+// the base class for all values that can appear in a LISP program at runtime
 class value {
 public:
     virtual ~value() = default;
@@ -28,8 +29,10 @@ public:
     bool is_nil();
 };
 
+// the base class for values that cannot be user-written, only generated during the evaluation
 class internal_value : public value {};
 
+// this class represents a primitive function (its code is written in C++)
 class v_primitive : public internal_value {
 public:
     v_primitive(prim_func func) : func_(func) {}
@@ -40,6 +43,7 @@ private:
     const prim_func func_;
 };
 
+// this class represents an user function (its code is written in LISP) together with captured environment
 class v_lambda : public internal_value {
 public:
     v_lambda(vp args, std::vector<vp> body, ep env) : args_(move(args)), body_(move(body)), env_(move(env)) {}

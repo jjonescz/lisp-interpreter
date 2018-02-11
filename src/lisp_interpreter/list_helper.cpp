@@ -27,7 +27,9 @@ list_helper::iterator list_helper::begin() {
 
 list_helper::iterator& list_helper::iterator::operator++() {
     val_ = val_->get_cdr();
-    if (val_->is_token()) { // end of list is represented by nullptr, instead of "()" token
+    if (val_->is_token()) {
+        // end of list is represented by nullptr,
+        // instead of the nil token (see list_helper::end)
         val_ = nullptr;
     }
     return *this;

@@ -1,4 +1,4 @@
-// lisp_interpreter.cpp : Defines the entry point for the console application.
+// lisp_interpreter.cpp : contains the main function
 //
 
 #include <iostream>
@@ -51,8 +51,8 @@ int main()
                 break;
             }
 
-            // wrap expression inside eval call, so that evaluation
-            // can be effectively overwritten by the running program
+            // wrap expression inside eval call (this has the effect that evaluation
+            // can be redefined by the running program)
             value = make_shared<e_pair>(com.eval_token, make_shared<e_pair>(
                 make_shared<e_pair>(com.quote_token, make_shared<e_pair>(move(value), com.nil_token)), com.nil_token));
 

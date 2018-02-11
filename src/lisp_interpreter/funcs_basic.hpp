@@ -1,4 +1,4 @@
-// funcs_basic.hpp
+// funcs_basic.hpp : basic primitive functions
 //
 
 #include <vector>
@@ -22,6 +22,8 @@ struct quote_func {
 };
 const string quote_func::name = "quote";
 
+// "lambda" can actually have multiple statements inside its body
+// - they are then evaluated sequentially
 struct lambda_func {
     static const string name;
     using params = func_params<1, true>;
@@ -46,6 +48,7 @@ struct lambda_func {
 };
 const string lambda_func::name = "lambda";
 
+// "define" function creates or rewrites a slot in the current environment
 struct define_func {
     static const string name;
     using params = func_params<2>;
@@ -63,6 +66,7 @@ struct define_func {
 };
 const string define_func::name = "define";
 
+// "set!" function tries to find a slot with the specified name in some environment up the hierarchy
 struct set_func {
     static const string name;
     using params = func_params<2>;
@@ -83,6 +87,10 @@ struct set_func {
 };
 const string set_func::name = "set!";
 
+// for a runtime program, everything is either a pair or a token
+// (lambdas and primitive functions are just tokens, although they
+// cannot be written by user directly, they can be only obtained by
+// evaluation)
 struct pair_func {
     static const string name;
     using params = func_params<1>;
@@ -94,6 +102,7 @@ struct pair_func {
 };
 const string pair_func::name = "pair?";
 
+// "eq?" function compares only tokens; lists can be compared recursively by some user function
 struct eq_func {
     static const string name;
     using params = func_params<2>;

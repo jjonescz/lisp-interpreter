@@ -26,6 +26,8 @@ vp printer::visit_pair(shared_ptr<e_pair> pair) {
         visit(pair->get_cdr());
     }
     else {
+        // if we are not inside a proper list, we print
+        // the pair using the special dotted syntax
         str_ << "(";
         visit(pair->get_car());
         str_ << " . ";
@@ -45,6 +47,9 @@ vp printer::visit_token(shared_ptr<e_token> token) {
     }
     return move(token);
 }
+
+// following special values are printed with a quote at the beginning,
+// because such token could never be parsed, hence it cannot be ambiguous
 
 vp printer::visit_primitive(shared_ptr<v_primitive> primitive) {
     str_ << "'[primitive function]";

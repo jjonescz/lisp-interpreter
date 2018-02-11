@@ -6,6 +6,8 @@
 
 #include "types.hpp"
 
+// this class wraps a list (even empty, i.e., the nil token)
+// and provides helpful functions to work with it
 class list_helper {
 public:
     list_helper(const vp& val);

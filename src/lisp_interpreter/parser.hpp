@@ -12,6 +12,7 @@ public:
     parser_error(const std::string& msg) : std::runtime_error(msg) {}
 };
 
+// this class analyzes list of tokens and tries to parse expressions out of it
 class parser {
 public:
     parser(tlist& toks, common_values& com);

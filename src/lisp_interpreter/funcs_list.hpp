@@ -1,4 +1,4 @@
-// funcs_list.hpp
+// funcs_list.hpp : functions for LISt Processing
 //
 
 #include <vector>

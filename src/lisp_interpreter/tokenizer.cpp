@@ -43,11 +43,15 @@ void tokenizer::tokenize(istream& input) {
 
 void tokenizer::flush() {
     if (!s_.empty()) {
+        // dot can actually be part of a valid string token, so it is only
+        // considered special if it stands alone (as a "whole word")
         if (s_ == ".") {
             tokens_.push_back(make_unique<t_dot>());
             s_.clear();
             return;
         }
+
+        // try to parse int or double
         stringstream ss(s_);
         int32_t i;
         if (ss >> i && ss.eof()) {
@@ -62,6 +66,8 @@ void tokenizer::flush() {
             s_.clear();
             return;
         }
+
+        // everything else is a string token
         tokens_.push_back(make_unique<t_string>(s_));
         s_.clear();
     }

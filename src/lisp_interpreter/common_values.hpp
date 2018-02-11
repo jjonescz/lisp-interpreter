@@ -6,6 +6,9 @@
 
 #include "types.hpp"
 
+// this class just holds pointers to values used by primitive functions
+// and parser (when parsing some syntactic sugar, for example) over the
+// whole program run, so that they don't have to be created every time
 class common_values {
 public:
 	common_values();

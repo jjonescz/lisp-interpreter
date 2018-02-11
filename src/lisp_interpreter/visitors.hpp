@@ -1,4 +1,5 @@
-// visitors.hpp
+// visitors.hpp : the visitor base class and a simple printer visitor class;
+// more complex visitor, the evaluator, is in a separate file
 //
 
 #ifndef _H_VISITORS
@@ -7,6 +8,8 @@
 #include <iostream>
 #include "types.hpp"
 
+// the base class for implementors of the visitor pattern of the abstract syntax tree
+// and the runtime "value tree" of LISP programs
 class visitor {
 public:
     virtual ~visitor() = default;
@@ -17,6 +20,7 @@ public:
     virtual vp visit_lambda(std::shared_ptr<v_lambda> lambda) = 0;
 };
 
+// this visitor just pretty-prints the values and doesn't change them in any way
 class printer : public visitor {
 public:
     printer(std::ostream& str) : str_(str), in_list_(false) {}

@@ -1,4 +1,4 @@
-// funcs_math.hpp
+// funcs_math.hpp : basic arithmetic operators
 //
 
 #include <vector>
