@@ -9,7 +9,7 @@
 
 using namespace std;
 
-evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr)), com(com) {
+evaluator::evaluator(common_values& com) : com(com), env_(make_shared<environment>(nullptr)) {
     // initialize environment with default values
     env_->map["()"] = com.nil_token;
     add_primitive<quote_func>();
