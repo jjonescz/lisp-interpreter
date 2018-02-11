@@ -49,7 +49,7 @@ void tokenizer::flush() {
             return;
         }
         stringstream ss(s_);
-        uint32_t i;
+        int32_t i;
         if (ss >> i && ss.eof()) {
             tokens_.push_back(make_unique<t_int>(i));
             s_.clear();

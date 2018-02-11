@@ -2,6 +2,7 @@
 //
 
 // TODO: check that shared_ptrs are copied only where they should
+// TODO: move doesn't have to be used as move(f()), when result from f is temporary anyway, right?
 
 #ifndef _H_TYPES
 #define _H_TYPES

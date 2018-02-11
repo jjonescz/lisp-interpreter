@@ -23,6 +23,7 @@ evaluator::evaluator(common_values& com) : env_(make_shared<environment>(nullptr
     add_primitive<eq_func>();
     add_primitive<if_func>();
     add_primitive<plus_func>();
+    add_primitive<mult_func>();
 }
 
 vp evaluator::visit_pair(shared_ptr<e_pair> pair) {
