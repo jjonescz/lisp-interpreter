@@ -6,7 +6,11 @@ This program interprets a simple dialect of the LISP language similar to Scheme.
 
 ### Windows
 
-Just open the `.vcxproj` file in `Visual Studio 2017`.
+Just open the `.sln` file in Visual Studio 2017 or execute:
+
+```ps1
+msbuild .\LispInterpreter.sln /p:Configuration=Release
+```
 
 ### Unix
 
