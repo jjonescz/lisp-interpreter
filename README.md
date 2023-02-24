@@ -11,7 +11,7 @@ Just open the `.vcxproj` file in `Visual Studio 2017`.
 ### Unix
 
 ```bash
-g++ --std=c++14 *.cpp -o lisp_interpreter
+g++ --std=c++14 src/lisp_interpreter/*.cpp -o lisp_interpreter
 ```
 
 ## Things to note about the language

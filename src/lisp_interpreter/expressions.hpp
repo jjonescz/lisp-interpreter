@@ -5,7 +5,6 @@
 #define _H_EXPRESSIONS
 
 #include <memory>
-#include <exception>
 #include "types.hpp"
 #include "values.hpp"
 

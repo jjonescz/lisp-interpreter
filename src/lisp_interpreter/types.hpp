@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <list>
+#include <stdexcept>
 
 class token;
 class t_left_paren;
